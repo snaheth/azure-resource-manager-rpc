@@ -1,22 +1,22 @@
 # Resource API Reference
 
-- [Resource API Reference] (Resource API Reference.md#resource-ref-id) <br/>
-- [Arguments for CRUD on Resource] (Resource API Reference.md#crud-arguments-id) <br/>
-  - [Put Resource] (Resource API Reference.md#put-resource-id) <br/>
-    - [Request] (Resource API Reference.md#put-resource-req-id) <br/>
-    - [Response] (Resource API Reference.md#put-resource-res-id) <br/>
-  - [Patch Resource] (Resource API Reference.md#patch-resource-id) <br/>
-    - [Request] (Resource API Reference.md#patch-resource-req-id) <br/>
-    - [Response] (Resource API Reference.md#patch-resource-res-id) <br/>
-  - [Delete Resource] (Resource API Reference.md#delete-resource-id) <br/>
-    - [Request] (Resource API Reference.md#delete-resource-req-id) <br/>
-    - [Response] (Resource API Reference.md#delete-resource-res-id) <br/>
-  - [Get Resource] (Resource API Reference.md#get-resource-id) <br/>
-    - [Request] (Resource API Reference.md#get-resource-req-id) <br/>
-    - [Response] (Resource API Reference.md#get-resource-res-id) <br/>
-  - [Move Resource] (Resource API Reference.md#move-resource-id) <br/>
-    - [Request] (Resource API Reference.md#move-resource-req-id) <br/>
-    - [Response] (Resource API Reference.md#move-resource-res-id) <br/>
+- [Resource API Reference] (resource-api-reference.md#resource-ref-id) <br/>
+- [Arguments for CRUD on Resource] (resource-api-reference.md#crud-arguments-id) <br/>
+  - [Put Resource] (resource-api-reference.md#put-resource-id) <br/>
+    - [Request] (resource-api-reference.md#put-resource-req-id) <br/>
+    - [Response] (resource-api-reference.md#put-resource-res-id) <br/>
+  - [Patch Resource] (resource-api-reference.md#patch-resource-id) <br/>
+    - [Request] (resource-api-reference.md#patch-resource-req-id) <br/>
+    - [Response] (resource-api-reference.md#patch-resource-res-id) <br/>
+  - [Delete Resource] (resource-api-reference.md#delete-resource-id) <br/>
+    - [Request] (resource-api-reference#delete-resource-req-id) <br/>
+    - [Response] (resource-api-reference.md#delete-resource-res-id) <br/>
+  - [Get Resource] (resource-api-reference.md#get-resource-id) <br/>
+    - [Request] (resource-api-reference.md#get-resource-req-id) <br/>
+    - [Response] (resource-api-reference.md#get-resource-res-id) <br/>
+  - [Move Resource] (resource-api-reference.md#move-resource-id) <br/>
+    - [Request] (resource-api-reference.md#move-resource-req-id) <br/>
+    - [Response] (resource-api-reference.md#move-resource-res-id) <br/>
 
 <div id='resource-ref-id'/>
 ## Resource API Reference
@@ -33,7 +33,7 @@ These are the APIs that are implemented by the resource provider. Below is the d
 | resourceType | The type of the resource – the resource providers declare the resource types they support at the time of registering with Azure. The resourceType should follow the lowerCamelCase convention and be plural (e.g. virtualMachines, resourceGroups, jobCollections, virtualNetworks).  The resource type can only be ASCII alphanumeric characters. |
 | resourceName | The name of the resource. The name cannot include:   &#39;&lt;&#39;, &#39;&gt;&#39;, &#39;%&#39;, &#39;&amp;&#39;, &#39;:&#39;, &#39;\\&#39;, &#39;?&#39;, &#39;/&#39; OR any control characters. The max length is 260 characters. All other characters are allowed. The RP is expected to be more restrictive and have its own validation. |
 | actionName | The action that is being performed on the resource (or a container that is inside the resource). |
-| api-version | Specifies the version of the protocol used to make this request.  Format must match YYYY-MM-DD[<code>-preview &#124 -alpha</code> &#124-beta &#124-rc&#124-privatepreview]. |
+| api-version | Specifies the version of the protocol used to make this request.  Format must match YYYY-MM-DD. It can be followed by a  -preview or -alpha or -beta or -rc or -privatepreview to indicate the appropriate milestone. |
 
 <div id='put-resource-id'/>
 ### Put Resource
@@ -51,7 +51,7 @@ ARM does not distinguish between creation and update. The resource provider shou
 
 **Arguments**
 
-[Description here] (https://github.com/ravbhatnagar/azure-resource-manager-rpc/blob/master/Resource Provider API v2.0.md#crud-arguments-id).
+[Description here] (resource-api-reference.md#crud-arguments-id).
 
 The resource group names and resource names should be matched case insensitively. That means, for example, if a user creates a resource in resource group &quot;rG1&quot;, and then calls a read operation on &quot;RG1&quot;, the same resource should be returned even though the casing differs.
 
@@ -189,7 +189,7 @@ Updates a resource belonging to a resource group. ARM requires RPs to support PA
 
 **Arguments**
 
-[Description here] (https://github.com/ravbhatnagar/azure-resource-manager-rpc/blob/master/Resource Provider API v2.0.md#crud-arguments-id).
+[Description here] (resource-api-reference.md#crud-arguments-id).
 
 **Request Body**
 
@@ -218,7 +218,7 @@ Headers common to all responses.
 
 **Response Body**
 
-The response body will contain the updated resource (using the existing value + the request in the PATCH) per the Azure REST guidelines (v2.1 can be seen [here](http://sharepoint/sites/azure-arc/REST%20Guidelines/Azure%20REST%20Design%20Guidelines%20v2.1.docx)).
+The response body will contain the updated resource (using the existing value + the request in the PATCH) per the Azure REST guidelines [here] (https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md).
 
 ##### Representing SKUs
 
@@ -247,7 +247,7 @@ Deletes a resource from the resource group.
 
 **Arguments**
 
-[Description here] (https://github.com/ravbhatnagar/azure-resource-manager-rpc/blob/master/Resource Provider API v2.0.md#crud-arguments-id).
+[Description here] (resource-api-reference.md#crud-arguments-id).
 
 **Request Headers**
 
@@ -312,7 +312,7 @@ This allows the resource provider to remain regional and still support this quer
 
 **Arguments**
 
-[Description here] (https://github.com/azure/azure-resource-manager-rpc/blob/master/Resource Provider API v2.0.md#crud-arguments-id).
+[Description here] (resource-api-reference.md#crud-arguments-id).
 
 **Request Headers**
 
@@ -368,7 +368,7 @@ For a detailed explanation of each field in the response body, please refer to t
 
 **Paging Response Body**
 
-The paging approach required by ARM is server side paging, as described [here](https://microsoft.sharepoint.com/teams/azure-arc/_layouts/15/WopiFrame.aspx?sourcedoc=%7b3379D14C-13C8-4B2C-B00F-15DDCF7E2F06%7d&amp;action=default).
+The paging approach required by ARM is server side paging, as described below.
 
     {
       "value": [
@@ -423,7 +423,7 @@ As some examples: (1) the website RP may require that all websites belonging to 
 
 **Arguments**
 
-[Description here] (https://github.com/ravbhatnagar/azure-resource-manager-rpc/blob/master/Resource Provider API v2.0.md#crud-arguments-id).
+[Description here] (resource-api-reference.md#crud-arguments-id).
 
 **Request Headers**
 
@@ -473,7 +473,7 @@ ARM will perform some basic validation before forwarding the request to the reso
 
 If the request reaches the resource provider, it should return 200 (OK) to indicate that the operation completed successfully.
 
-202 (Accepted) can be returned to indicate that the operation will [complete asynchronously](http://sharepoint/sites/CIS/AzureRT/Shared%20Documents/Design%20Docs/Application%20Services/Resource%20Provider%20API%20v2.docx#_Asynchronous_operations).
+202 (Accepted) can be returned to indicate that the operation will [complete asynchronously](Addendum.md#async-id).
 
 If the resource group \*or\* resource does not exist, 404 (NotFound) should be returned. A 400 (BadRequest) can be used if the request does not satisfy the RP specific requirements.
 
