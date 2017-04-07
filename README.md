@@ -1,4 +1,4 @@
-# Azure Resource Manager Resoure Provider Contract (RPC)
+# Azure Resource Manager Resource Provider Contract (RPC)
 
 ## Abstract
 This document covers the API contract that must be implemented by each Azure Resource Provider in order to onboard to the Azure management API surface (as well as RBAC, tags, and templates).
