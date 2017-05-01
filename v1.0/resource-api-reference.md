@@ -265,7 +265,7 @@ Returns a resource belonging to a resource group. Resource types can be nested a
 
 | Method | Request URI |
 | --- | --- |
-| GET | https://<endpoint>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}?api-version={api-version} |
+| GET | https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}?api-version={api-version} |
 
 #### Request - Get resource collection under resource group ####
 
