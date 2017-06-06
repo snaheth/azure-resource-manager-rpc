@@ -32,8 +32,8 @@ This API uses the &quot;system&quot; version of 2.0 because it can be triggered 
         "properties": {
 
                 "tenantId":"ac430efe-1866-4124-9ed9-ee67f9cb75db",
-                "locationPlacementId":"Internal\_2014-09-01",
-                "quotaId":"Default\_2014-09-01",
+                "locationPlacementId":"Internal_2014-09-01",
+                "quotaId":"Default_2014-09-01",
                 "registeredFeatures": [{ "name": "<featureName>", "state": "Registered" }]
        }
     }
