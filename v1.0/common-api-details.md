@@ -89,22 +89,22 @@ The resource providers must return the \*code\* and \*message\* fields; however,
 **Response Body**
 
     {
-    "error": {
-      	"code": "BadArgument",
-      	"message": "The provided database &#39;foo&#39; has an invalid username.",
-      	"target": "query",
-      	"details": [
-        	{
-        	 "code": "301",
-         	"target": "$search"
-         	"message": "$search query option not supported",
-        	}
-      	]
-      	"innererror": {
-      		"trace": [...],
-        	"context": {...}
+      "error": {
+        "code": "BadArgument",
+        "message": "The provided database &#39;foo&#39; has an invalid username.",
+        "target": "query",
+        "details": [
+          {
+            "code": "301",
+            "target": "$search"
+            "message": "$search query option not supported",
+          }
+        ]
+        "innererror": {
+          "trace": [...],
+          "context": {...}
+        }
       }
-    }
     }
 
 

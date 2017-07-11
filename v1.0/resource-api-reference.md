@@ -50,23 +50,23 @@ The resource group name and resource name **MUST** come from the URL and not the
     {
       "location": "North US",
       "tags": {
-          	"key": "value"
-    },
-      "properties": { 
-            	"comment: Resource defined structure" 
+        "key": "value"
       },
-      "sku" : {
-           	"name" : "sku code, such as P3",
-           	"capacity" : {number}
-     },
-     "plan" : {
-        	"name": "User defined name of the 3rd Party Artifact",
-          "publisher": "Publisher of the 3rd Party Artifact ",
-    		  "product": "OfferID for the 3rd Party Artifact ",
-    		  "promotionCode": "Promotion Code",
-    		  "version" : "Version of the 3rd Party Artifact"
-    }
-     "kind" : "resource kind"
+      "properties": {
+        "comment": "Resource defined structure" 
+      },
+      "sku": {
+        "name": "sku code, such as P3",
+        "capacity": {number}
+      },
+      "plan": {
+        "name": "User defined name of the 3rd Party Artifact",
+        "publisher": "Publisher of the 3rd Party Artifact ",
+        "product": "OfferID for the 3rd Party Artifact ",
+        "promotionCode": "Promotion Code",
+        "version": "Version of the 3rd Party Artifact"
+      }
+      "kind": "resource kind"
     }
     
 | **Field** | Description |
@@ -106,24 +106,24 @@ Every resource can have a section with properties. These are the settings that d
 PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}?api-version=2016-01-01
 
     {
-     	"location": "North US",
-     	"tags": {
-         "department": "Finance",
-         "app": "Quarterly Reports",
-         "owner": "chlama"
-       },
-       	"sku": {  
-           "name": "standard"  
-        },
-     	"properties": {  
+      "location": "North US",
+      "tags": {
+        "department": "Finance",
+        "app": "Quarterly Reports",
+        "owner": "chlama"
+      },
+      "sku": {  
+        "name": "standard"  
+      },
+      "properties": {  
         "quota": {  
-           "maxJobCount": "10",  
-           "maxRecurrence": {  
-              "Frequency": "minute",  
-              "interval": "1"  
-              }  
-            }  
-    	}  
+          "maxJobCount": "10",  
+          "maxRecurrence": {  
+            "Frequency": "minute",  
+            "interval": "1"  
+          }  
+        }  
+      }  
     }
 
 Since different types of resources have different settings, the contents of this field are left under the control of the resource provider and ARM will never be made aware of these fields. However, in the case of ARM templates, the template execution engine will replace all parameters and expressions \*before\* passing the instantiated object to the RPs.
@@ -209,10 +209,10 @@ In addition, the PATCH operation must be supported for the SKU property to suppo
 **Request Body**
 
     {
-    "sku" : {
-      	"name" : "F0",
-      	"capacity" : 1
-       }
+      "sku": {
+        "name": "F0",
+        "capacity": 1
+      }
     }
 
 ### Delete Resource ###
@@ -320,16 +320,18 @@ Headers common to all responses.
 **Response Body**
 
     {
-     "id": "/subscriptions/{id}/resourceGroups/{group}/providers/{rpns}/{type}/{name}",
-     "name": "{name}",
-     "type": "{resourceProviderNamespace}/{resourceType}",
-     "location": "North US",
-     "tags": {
-              "key1": "value 1",
-              "key2": "value 2"
-       },
-    "kind" : "resource kind",
-    "properties": { "comment: "Resource defined structure" }
+      "id": "/subscriptions/{id}/resourceGroups/{group}/providers/{rpns}/{type}/{name}",
+      "name": "{name}",
+      "type": "{resourceProviderNamespace}/{resourceType}",
+      "location": "North US",
+      "tags": {
+        "key1": "value 1",
+        "key2": "value 2"
+      },
+      "kind": "resource kind",
+      "properties": {
+        "comment": "Resource defined structure"
+      }
     }
 
 For a detailed explanation of each field in the response body, please refer to the request body description in the PUT resource section. The only GET specific properties are "name," "type" and "id."
@@ -349,23 +351,27 @@ The paging approach required by ARM is server side paging, as described below.
     {
       "value": [
         {
-        "id": "{url to resource 1}",
-        "name": "Name1",
-        "type": "{resourceProviderNamespace}/{resourceType}",
-        "location": "North US"
-        "properties": { "comment: "Resource defined structure" },
-        "kind" : "resource kind"
-    },
-    {
-        "id": "{url to resource 2}",
-        "name": "Name2",
-        "type": "{resourceProviderNamespace}/{resourceType}",
-        "location": "North US",
-        "properties": { "comment: "Resource defined structure" }.
-        "kind" : "resource kind"
-    }
-    ],
-    "nextLink": "{originalRequestUrl}?$skipToken={opaqueString}"
+          "id": "{url to resource 1}",
+          "name": "Name1",
+          "type": "{resourceProviderNamespace}/{resourceType}",
+          "location": "North US"
+          "properties": {
+            "comment": "Resource defined structure"
+          },
+          "kind": "resource kind"
+        },
+        {
+          "id": "{url to resource 2}",
+          "name": "Name2",
+          "type": "{resourceProviderNamespace}/{resourceType}",
+          "location": "North US",
+          "properties": {
+            "comment": "Resource defined structure"
+          },
+          "kind": "resource kind"
+        }
+      ],
+      "nextLink": "{originalRequestUrl}?$skipToken={opaqueString}"
     }
 
 The nextLink field is expected to point to the URL the client should use to fetch the next page (per server side paging). This matches the OData guidelines for paged responses [here](http://docs.oasis-open.org/odata/odata-json-format/v4.0/cos01/odata-json-format-v4.0-cos01.html#_Toc372793055). If a resource provider does not support paging, it should return the same body (JSON object with &quot;value&quot; property) but omit nextLink entirely (or set to null, \*not\* empty string) for future compatibility.
@@ -406,12 +412,11 @@ See common client request headers.
 **Request Body**
 
     {
-    "targetResourceGroup": "/subscriptions/{targetId}/resourceGroups/{targetName}",
-    "resources":
-    [
-     "/subscriptions/{id}/resourceGroups/{source}/providers/{namespace}/{type}/{name}",
-     "/subscriptions/{id}/resourceGroups/{source}/providers/{namespace}/{type}/{name}"
-    ]
+      "targetResourceGroup": "/subscriptions/{targetId}/resourceGroups/{targetName}",
+      "resources": [
+        "/subscriptions/{id}/resourceGroups/{source}/providers/{namespace}/{type}/{name}",
+        "/subscriptions/{id}/resourceGroups/{source}/providers/{namespace}/{type}/{name}"
+      ]
     }
 
 | Element name | Description |

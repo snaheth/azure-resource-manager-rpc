@@ -25,17 +25,21 @@ This API uses the &quot;system&quot; version of 2.0 because it can be triggered 
 **Request Body**
 
     {
-        "state": "Registered" | "Unregistered" | "Warned" | "Suspended" | "Deleted",
+      "state": "Registered" | "Unregistered" | "Warned" | "Suspended" | "Deleted",
 
-        "registrationDate": "Tue, 15 Nov 1994 08:12:31 GMT"
+      "registrationDate": "Tue, 15 Nov 1994 08:12:31 GMT"
 
-        "properties": {
-
-                "tenantId":"ac430efe-1866-4124-9ed9-ee67f9cb75db",
-                "locationPlacementId":"Internal_2014-09-01",
-                "quotaId":"Default_2014-09-01",
-                "registeredFeatures": [{ "name": "<featureName>", "state": "Registered" }]
-       }
+      "properties": {
+        "tenantId":"ac430efe-1866-4124-9ed9-ee67f9cb75db",
+        "locationPlacementId":"Internal_2014-09-01",
+        "quotaId":"Default_2014-09-01",
+        "registeredFeatures": [
+          {
+            "name": "<featureName>",
+            "state": "Registered"
+          }
+        ]
+      }
     }
 
 | **Element name** | Description |

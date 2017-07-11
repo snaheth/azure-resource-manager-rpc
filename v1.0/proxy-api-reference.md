@@ -37,7 +37,7 @@ Examples of action names include: "restartVM" or "listStorageKeys".
 **Request Body**
 
     {
-    "resourceDefinedProperty": "Resource defined value";
+      "resourceDefinedProperty": "Resource defined value"
     }
 
 All parameters for the action request should be contained in the request body – and not in the URL. This matches the OData and Azure REST guidelines and will avoid impacting the authZ checks.
@@ -137,33 +137,32 @@ This API is unique in that it is not scoped to a subscription – it is consider
 #### Response ####
 
     {
-    "value": [
-    {
-      "name": "{resourceProviderNamespace}/{resourceType}/{read|write|delete|action}",
-      "display": {
-        "provider": "{Name of the provider for display purposes}",
-        "resource": "{Name of the resource type for display purposes}",
-        "operation": "{Name of the operation for display purposes}",
-        "description": "{Description of the operation for display purposes}"
-      },
+      "value": [
+        {
+          "name": "{resourceProviderNamespace}/{resourceType}/{read|write|delete|action}",
+          "display": {
+            "provider": "{Name of the provider for display purposes}",
+            "resource": "{Name of the resource type for display purposes}",
+            "operation": "{Name of the operation for display purposes}",
+            "description": "{Description of the operation for display purposes}"
+          },
+          "origin": "user|system|user,system",
+          "properties": { }
+        },
 
-      "origin": "user|system|user,system",
-      "properties": { }
-    },
-
-    {
-      "name": "{resourceProviderNamespace}/{resourceType}/{read|write|delete|action}",
-      "display": {
-        "provider": "{Name of the provider for display purposes}",
-        "resource": "{Name of the resource type for display purposes}",
-        "operation": "{Name of the operation for display purposes}",
-        "description": "{Description of the operation for display purposes}"
-      },
-      "origin": "user|system|user,system",
-      "properties": { }
-    },
-    ],
-    "nextLink": "{originalRequestUrl}?$skipToken={opaqueString}"
+        {
+          "name": "{resourceProviderNamespace}/{resourceType}/{read|write|delete|action}",
+          "display": {
+            "provider": "{Name of the provider for display purposes}",
+            "resource": "{Name of the resource type for display purposes}",
+            "operation": "{Name of the operation for display purposes}",
+            "description": "{Description of the operation for display purposes}"
+          },
+          "origin": "user|system|user,system",
+          "properties": { }
+        },
+      ],
+      "nextLink": "{originalRequestUrl}?$skipToken={opaqueString}"
     }
 
 | Element name | Description |
@@ -217,8 +216,8 @@ Many resource providers have resource name uniqueness requirements – usually r
 **Request Body**
 
     {
-    "name": "{resourceNameToVerify}",
-    "type": "{fully qualified resource type which includes provider namespace}"
+      "name": "{resourceNameToVerify}",
+      "type": "{fully qualified resource type which includes provider namespace}"
     }
 
 #### Response ####
@@ -236,9 +235,9 @@ Headers common to all responses.
 **Response Body**
 
     {
-    "nameAvailable": true|false,
-    "reason": "Invalid|AlreadyExists",
-    "message": "<error message>"
+      "nameAvailable": true|false,
+      "reason": "Invalid|AlreadyExists",
+      "message": "<error message>"
     }
 
 | Element name | Description |
