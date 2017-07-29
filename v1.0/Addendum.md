@@ -101,7 +101,7 @@ As a result, it is essential that the RPs follow proper REST guidelines when ret
 
 ## Asynchronous Operations ##
 
-Some REST operations can take a long time to complete. Althgouth REST is not supposed to be stateful, some operations are made asynchronouse while waiting for the state machine to create the resources, and will reply before the operation on resources are completed. For such operations, the following guidance applies.
+Some REST operations can take a long time to complete. Although REST is not supposed to be stateful, some operations are made asynchronous while waiting for the state machine to create the resources, and will reply before the operation on resources are completed. For such operations, the following guidance applies.
 
 ## Creating or Updating Resources ##
 
