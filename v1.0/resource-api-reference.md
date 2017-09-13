@@ -66,7 +66,8 @@ The resource group name and resource name **MUST** come from the URL and not the
     		  "promotionCode": "Promotion Code",
     		  "version" : "Version of the 3rd Party Artifact"
     }
-     "kind" : "resource kind"
+     "kind" : "resource kind",
+     "managedBy": "resource-id"
     }
     
 | **Field** | Description |
@@ -86,6 +87,7 @@ The resource group name and resource name **MUST** come from the URL and not the
 | **plan.product** | Required (if plan is specified), string. The 3rd Party artifact that is being procured. E.g. NewRelic. Product maps to the OfferID specified for the artifact at the time of Data Market onboarding. |
 | **plan.promotionCode** | Optional, string. A publisher provided promotion code as provisioned in Data Market for the said product/artifact. |
 | **plan.version** | Optional, string. The version of the desired product/artifact.  Ignored by commerce. |
+| **managedBy** |  Optional, string. Indicates if this resource is managed by another azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. | 
 
 ##### Representing SKUs ####
 
@@ -115,6 +117,7 @@ PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{
        	"sku": {  
            "name": "standard"  
         },
+        "managedBy" : "/subscriptions/{id}/resourceGroups/{group}/providers/{rpns}/{type}/{name}"
      	"properties": {  
         "quota": {  
            "maxJobCount": "10",  
@@ -122,7 +125,7 @@ PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{
               "Frequency": "minute",  
               "interval": "1"  
               }  
-            }  
+            }
     	}  
     }
 
