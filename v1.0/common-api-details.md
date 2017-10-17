@@ -32,6 +32,8 @@ The resource provider proxy will preserve all the client requests headers, with 
 | x-ms-client-identity-provider | Always added. Set to the identity provider of the client JWT. |1st party only |
 | x-ms-client-wids | Always added. Set to the wids of the client JWT. These identify the admins of the tenant which issued the JWT. | 1st party only |
 | x-ms-client-authentication-methods | Always added. Set to the authentication method references of client JWT. | 1st party only|
+| x-ms-management-group-ancestors
+ | Always added. Set to the management groups that subscription might belong to. | 1st party only|
 
 ## Client Request Headers ##
 
