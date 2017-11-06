@@ -420,7 +420,7 @@ See common client request headers.
 | Element name | Description |
 | --- | --- |
 | targetResourceGroup | **Required** , string.The target resource group id to move the resources to.  The target resource group cannot be the same as the current (source) resource group. If the subscriptionId is different than the current resource group&#39;s subscriptionId, then additional checks will be performed in the frontdoor. |
-| resources | **Required** , array of resource ids.The collection of resources to move to the target resource group.  The resources must be from the current resource group from the request URL. At most 250 resources can be moved with a single request. The resources can span several different resource providers and resource types. |
+| resources | **Required** , array of resource ids.The collection of resources to move to the target resource group.  The resources must be from the current resource group from the request URL. At most 800 resources can be moved with a single request. The resources can span several different resource providers and resource types. |
 
 #### Response ####
 
@@ -441,7 +441,7 @@ ARM will perform some basic validation before forwarding the request to the reso
 | One of the values in the resources collection is not from current resource group. | 400 |
 | One of the resources in the resources list is a child resource (only top level resources can be moved; their children are assumed to be moved). | 400 |
 | The resource type does not support move. | 400 |
-| Too many resources are present in the request (250 is the limit). | 400 |
+| Too many resources are present in the request (800 is the limit). | 400 |
 | The resource move would cause the quota for the subscription / resource group quotas to be exceeded. | 409 |
 | The source or target resource group is locked (e.g. move already in progress, resource group is being deleted). | 409 |
 | Target resource group already has resource with the same Id as given in the request. | 409 |
