@@ -268,7 +268,7 @@ Returns a resource belonging to a resource group. Resource types can be nested a
 
 | Method | Request URI |
 | --- | --- |
-| GET | https://<endpoint>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}?api-version={api-version} |
+| GET | https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}?api-version={api-version} |
 
 #### Request - Get resource collection under resource group ####
 
@@ -352,23 +352,23 @@ The paging approach required by ARM is server side paging, as described below.
     {
       "value": [
         {
-        "id": "{url to resource 1}",
-        "name": "Name1",
-        "type": "{resourceProviderNamespace}/{resourceType}",
-        "location": "North US"
-        "properties": { "comment: "Resource defined structure" },
-        "kind" : "resource kind"
-    },
-    {
-        "id": "{url to resource 2}",
-        "name": "Name2",
-        "type": "{resourceProviderNamespace}/{resourceType}",
-        "location": "North US",
-        "properties": { "comment: "Resource defined structure" }.
-        "kind" : "resource kind"
-    }
-    ],
-    "nextLink": "{originalRequestUrl}?$skipToken={opaqueString}"
+          "id": "{url to resource 1}",
+          "name": "Name1",
+          "type": "{resourceProviderNamespace}/{resourceType}",
+          "location": "North US"
+          "properties": { "comment: "Resource defined structure" },
+          "kind" : "resource kind"
+        },
+        {
+          "id": "{url to resource 2}",
+          "name": "Name2",
+          "type": "{resourceProviderNamespace}/{resourceType}",
+          "location": "North US",
+          "properties": { "comment: "Resource defined structure" }.
+          "kind" : "resource kind"
+        }
+      ],
+      "nextLink": "{originalRequestUrl}?$skipToken={opaqueString}"
     }
 
 The nextLink field is expected to point to the URL the client should use to fetch the next page (per server side paging). This matches the OData guidelines for paged responses [here](http://docs.oasis-open.org/odata/odata-json-format/v4.0/cos01/odata-json-format-v4.0-cos01.html#_Toc372793055). If a resource provider does not support paging, it should return the same body (JSON object with &quot;value&quot; property) but omit nextLink entirely (or set to null, \*not\* empty string) for future compatibility.
