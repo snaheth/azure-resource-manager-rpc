@@ -16,7 +16,7 @@ These are the APIs that are implemented by the resource provider. Below is the d
 | Argument | Description |
 | --- | --- |
 | subscriptionId | The subscriptionId for the Azure user. |
-| resourceGroupName | The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name must be no longer than 80 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and &#39;-&#39;, &#39;\_&#39;, &#39;(&#39;, &#39;)&#39; and&#39;.&#39;.  Note that the name cannot end with &#39;.&#39; |
+| resourceGroupName | The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name must be no longer than 90 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and &#39;-&#39;, &#39;\_&#39;, &#39;(&#39;, &#39;)&#39; and&#39;.&#39;.  Note that the name cannot end with &#39;.&#39; |
 | resourceProviderNamespace | The resource provider namespace can only be ASCII alphanumeric characters and the &quot;.&quot; character. |
 | resourceType | The type of the resource – the resource providers declare the resource types they support at the time of registering with Azure. The resourceType should follow the lowerCamelCase convention and be plural (e.g. virtualMachines, resourceGroups, jobCollections, virtualNetworks).  The resource type can only be ASCII alphanumeric characters. |
 | resourceName | The name of the resource. The name cannot include:   &#39;&lt;&#39;, &#39;&gt;&#39;, &#39;%&#39;, &#39;&amp;&#39;, &#39;:&#39;, &#39;\\&#39;, &#39;?&#39;, &#39;/&#39; OR any control characters. The max length is 260 characters. All other characters are allowed. The RP is expected to be more restrictive and have its own validation. |
