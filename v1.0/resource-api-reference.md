@@ -399,7 +399,8 @@ As some examples: (1) the website RP may require that all websites belonging to 
 | POST | https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/moveResources?api-version={api-version} |
 
 **Arguments**
-[Description here](#arguments-for-crud-on-resource) <br/>
+
+[Description here](#arguments-for-crud-on-resource).
 
 
 **Request Headers**
