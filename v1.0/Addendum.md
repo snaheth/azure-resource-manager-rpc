@@ -181,11 +181,11 @@ The asynchronous operation APIs frequently use the 202 Accepted status code and 
 
 The Uri for the Location header can be either underneath the original request:
 
-https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/{Original-URL-Fo-Request}/operationresults/{operationId}&amp;api-version={api-version}
+https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/{Original-URL-Fo-Request}/operationresults/{operationId}?api-version={api-version}
 
 or underneath a subscription level operations URL:
 
-https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/providers/{namespace}/locations/westus/operationresults/{operationId}&amp;api-version={api-version}
+https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/providers/{namespace}/locations/westus/operationresults/{operationId}?api-version={api-version}
 
 The _endpoint_ can be determined by the hostname of the URI in the _referrer_ header.
 
