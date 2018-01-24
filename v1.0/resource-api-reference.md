@@ -400,7 +400,8 @@ As some examples: (1) the website RP may require that all websites belonging to 
 
 **Arguments**
 
-[Description here] (resource-api-reference.md#crud-arguments-id).
+[Description here](#arguments-for-crud-on-resource).
+
 
 **Request Headers**
 
