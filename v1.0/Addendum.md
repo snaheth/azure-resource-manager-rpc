@@ -102,6 +102,11 @@ As a result, it is essential that the RPs follow proper REST guidelines when ret
 ## Asynchronous Operations ##
 
 Some REST operations can take a long time to complete. Although REST is not supposed to be stateful, some operations are made asynchronous while waiting for the state machine to create the resources, and will reply before the operation on resources are completed. For such operations, the following guidance applies.
+* All header values provided follows [RFC2616, Section14](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html)
+
+    * Location header should be absolute URI
+    * Retry-After should be (integer), will not support http-date
+    * Azure-AsyncOperation header should be absolute URI
 
 ## Creating or Updating Resources ##
 
