@@ -103,6 +103,12 @@ As a result, it is essential that the RPs follow proper REST guidelines when ret
 
 Some REST operations can take a long time to complete. Although REST is not supposed to be stateful, some operations are made asynchronous while waiting for the state machine to create the resources, and will reply before the operation on resources are completed. For such operations, the following guidance applies.
 
+**Please note:**
+
+    * Location header should be absolute URI (partial URI is not supported)
+    * Retry-After should be (integer), will not support http-date
+    * Azure-AsyncOperation header should be absolute URI (partial URI is not supported)
+
 ## Creating or Updating Resources ##
 
 The API flow for PUT/PATCH should be to:
