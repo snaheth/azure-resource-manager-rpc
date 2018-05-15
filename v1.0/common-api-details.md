@@ -119,9 +119,9 @@ The resource providers must return the \*code\* and \*message\* fields; however,
 
 ### Max Response Size ###
 
-In all the calls that ARM makes to the resource provider, the maximum size of a response that ARM will accept from the resource providers is 4 MB.
+In all the calls that ARM makes to the resource provider, the maximum size of a response that ARM will accept from the resource providers is 8 MB.
 
-Any response greater than 4 MB in size will be dropped by ARM, and **500 Internal Server Error** will be returned to the client.  In general, APIs exposed by the resource provider should be designed to transmit relatively little data in keeping with the management nature of the API.
+Any response greater than 8 MB in size will be dropped by ARM, and **500 Internal Server Error** will be returned to the client.  In general, APIs exposed by the resource provider should be designed to transmit relatively little data in keeping with the management nature of the API.
 
 ### Transfer-Encoding ###
 
