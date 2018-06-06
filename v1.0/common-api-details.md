@@ -101,10 +101,6 @@ The resource providers must return the \*code\* and \*message\* fields; however,
          	"message": "$search query option not supported",
         	}
       	]
-      	"innererror": {
-      		"trace": [...],
-        	"context": {...}
-      }
     }
     }
 
@@ -115,7 +111,6 @@ The resource providers must return the \*code\* and \*message\* fields; however,
 | code | Required, string.String that can be used to programmatically identify the error. Some will be standardized for all Azure REST services, some will be domain specific. These error code should not be localized, but are typically a string like &quot;BadArgument&quot;, &quot;NotFound&quot;, etc. |
 | target | Optional, string.The target of the particular error (for example, the name of the property in error). |
 | details | Optional, string.An array of JSON objects that MUST contain name/value pairs for code and message, and MAY contain a name/value pair for target, as described above.The contents of this section are service-defined but must adhere to the aforementioned schema. |
-| innererror | Optional, string.The contents of this object are service-defined. Usually this object contains information that will help debug the service. |
 
 ### Max Response Size ###
 
