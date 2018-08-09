@@ -261,7 +261,7 @@ The recommended pattern for REST clients is to retry calls that:
 3. Experience a socket exception (e.g. DNS resolution failures; network drop; no listening socket).
 4. Any other response where a Retry-After header is present.
 
-The retry interval, strategy (e.g. exponential/linear) and max timeout should be defined by the _server_ and not the client. The server indicates how long it expects the client to wait before retryint the call by including a (Retry-After header)[https://tools.ietf.org/html/rfc7231#section-7.1.3] in the response. That allows various server workloads to advertise different retry policies.
+The retry interval, strategy (e.g. exponential/linear) and max timeout should be defined by the _server_ and not the client. The server indicates how long it expects the client to wait before retrying the call by including a (Retry-After header)[https://tools.ietf.org/html/rfc7231#section-7.1.3] in the response. That allows various server workloads to advertise different retry policies.
 
 ## Designing Resources ##
 
