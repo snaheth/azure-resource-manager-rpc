@@ -368,18 +368,19 @@ The paging approach required by ARM is server side paging, as described below.
           "kind" : "resource kind"
         }
       ],
-      "nextLink": "{originalRequestUrl}?$skipToken={opaqueString}"
+      "nextLink": "{refererHeaderUrl}?$skipToken={opaqueString}"
     }
 
 The nextLink field is expected to point to the URL the client should use to fetch the next page (per server side paging). This matches the OData guidelines for paged responses [here](http://docs.oasis-open.org/odata/odata-json-format/v4.0/cos01/odata-json-format-v4.0-cos01.html#_Toc372793055). If a resource provider does not support paging, it should return the same body (JSON object with &quot;value&quot; property) but omit nextLink entirely (or set to null, \*not\* empty string) for future compatibility.
 
 The nextLink should be implemented using following query parameters:
 
-- skipToken: opaque token that allows the resource provider to skip resources already enumerated. This value is defined and returned by the RP after first request via nextLink.
-- top: the optional client query parameter which defines the maximum number of records to be returned by the server.
+- $skipToken: opaque token that allows the resource provider to skip resources already enumerated. This value is defined and returned by the RP after first request via nextLink.
+- $top: the optional client query parameter which defines the maximum number of records to be returned by the server.
 
 Implementation details:
 
+- The refererHeaderUrl used to format the nextLink is the URI provided by ARM in the referer header, and not the request URI. See [here](common-api-details.md#proxy-request-header-modifications) for more information on the referer header.
 - NextLink may include all the query parameters (specifically OData $filter) used by the client in the first query.
 - Server may return less records than requested with nextLink. Returning zero records with NextLink is an acceptable response.
 - Clients must fetch records until the nextLink is not returned back / null. Clients should never rely on number of returned records to determinate if pagination is completed.
