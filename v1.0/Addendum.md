@@ -427,7 +427,7 @@ For a detailed explanation of each field in the response body, please refer to t
 For new resources, SKUs are enumerated via ARM's metadata store.  This allows users to enumerate SKUs based on location, api-version, feature flags, and offerId filters.
 
 ## Correlating resources created on behalf of customer ##
-It is required that Resource Providers (RP) tag theresources when making service-to-service (S2S) calls using their internalsubscription. When a customer call to provision a resource comes to a RP andthat RP needs to call another RP using an internal subscription to complete therequest, it must tag the resource(s) with the customer’s original fullyqualified resourceId. This tag will not be visible to the customers as it willreside in the internal subscription only. This is applicable for both PUT andPATCH.
+It is required that Resource Providers (RP) tag the resources when making service-to-service (S2S) calls using their internal subscription. When a customer call to provision a resource comes to a RP and that RP needs to call another RP using an internal subscription to complete the request, it must tag the resource(s) with the customer’s original fullyqualified resourceId. This tag will not be visible to the customers as it will reside in the internal subscription only. This is applicable for both PUT andPATCH.
 
 The tag should have the following format –
 Tag Key – resourceCreatedFor
