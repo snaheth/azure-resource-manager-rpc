@@ -101,7 +101,13 @@ As a result, it is essential that the RPs follow proper REST guidelines when ret
 
 ## Asynchronous Operations ##
 
-Some REST operations can take a long time to complete. Althgouth REST is not supposed to be stateful, some operations are made asynchronouse while waiting for the state machine to create the resources, and will reply before the operation on resources are completed. For such operations, the following guidance applies.
+Some REST operations can take a long time to complete. Although REST is not supposed to be stateful, some operations are made asynchronous while waiting for the state machine to create the resources, and will reply before the operation on resources are completed. For such operations, the following guidance applies.
+
+**Please note:**
+
+    * Location header should be absolute URI (partial URI is not supported)
+    * Retry-After should be (integer), will not support http-date
+    * Azure-AsyncOperation header should be absolute URI (partial URI is not supported)
 
 ## Creating or Updating Resources ##
 
@@ -180,13 +186,13 @@ The asynchronous operation APIs frequently use the 202 Accepted status code and 
 
 The Uri for the Location header can be either underneath the original request:
 
-https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/{Original-URL-Fo-Request}/operationresults/{operationId}&amp;api-version={api-version}
+https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/{Original-URL-Fo-Request}/operationresults/{operationId}?api-version={api-version}
 
 or underneath a subscription level operations URL:
 
-https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/providers/{namespace}/locations/westus/operationresults/{operationId}&amp;api-version={api-version}
+https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/providers/{namespace}/locations/westus/operationresults/{operationId}?api-version={api-version}
 
-The _endpoint_ can be determined by the hostname of the URI in the _referrer_ header.
+The _endpoint_ can be determined by the hostname of the URI in the _referer_ header.
 
 After this maximum time, clients will give up and treat the operation as timed out. Please note that the location header needs to be the full absolute URI.
 
@@ -251,8 +257,9 @@ The recommended pattern for REST clients is to retry calls that:
 1. Return 408 indicating a request timeout;
 2. Return a 5xx status code indicating a server failure (e.g. 500 InternalServerError; 503 Service Unavailable);
 3. Experience a socket exception (e.g. DNS resolution failures; network drop; no listening socket).
+4. Any other response where a Retry-After header is present.
 
-The retry interval, strategy (e.g. exponential/linear) and max timeout should be defined by the _server_ and not the client. That allows various server workloads to advertise different retry policies.
+The retry interval, strategy (e.g. exponential/linear) and max timeout should be defined by the _server_ and not the client. The server indicates how long it expects the client to wait before retrying the call by including a (Retry-After header)[https://tools.ietf.org/html/rfc7231#section-7.1.3] in the response. That allows various server workloads to advertise different retry policies.
 
 ## Designing Resources ##
 
@@ -417,7 +424,7 @@ For a detailed explanation of each field in the response body, please refer to t
 For new resources, SKUs are enumerated via ARM's metadata store.  This allows users to enumerate SKUs based on location, api-version, feature flags, and offerId filters.
 
 ## Correlating resources created on behalf of customer ##
-It is required that Resource Providers (RP) tag theresources when making service-to-service (S2S) calls using their internalsubscription. When a customer call to provision a resource comes to a RP andthat RP needs to call another RP using an internal subscription to complete therequest, it must tag the resource(s) with the customer’s original fullyqualified resourceId. This tag will not be visible to the customers as it willreside in the internal subscription only. This is applicable for both PUT andPATCH.
+It is required that Resource Providers (RP) tag the resources when making service-to-service (S2S) calls using their internal subscription. When a customer call to provision a resource comes to a RP and that RP needs to call another RP using an internal subscription to complete the request, it must tag the resource(s) with the customer’s original fullyqualified resourceId. This tag will not be visible to the customers as it will reside in the internal subscription only. This is applicable for both PUT andPATCH.
 
 The tag should have the following format –
 Tag Key – resourceCreatedFor

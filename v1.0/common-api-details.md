@@ -16,7 +16,7 @@ The resource provider proxy will preserve all the client requests headers, with 
 
 | Header                     | Description |  1st or 3rd Party |
 | :----------------------------| :------------------------| :-----------------------------------|
-| referer | Always added. Set to the full URI that the client connected to (which will be different than the RP URI, since it will have the public hostname instead of the RP hostname).This value can be used in generating FQDN for Location headers or other requests since RPs should not reference their endpoint name. |  1st and 3rd party |
+| referer | Always added. Set to the full URI that the client connected to (which will be different than the RP URI, since it will have the public hostname instead of the RP hostname). This value can be used in generating FQDN for Location headers or other requests since RPs should not reference their endpoint name. |  1st and 3rd party |
 | authorization | Always removed/changed. The authorization used by the client to the proxy will be different than the authorization used to communicate from the proxy to the resource provider. | 1st and 3rd party |
 | x-ms-correlation-request-id | Always added. Specifies the tracing correlation Id for the request; the resource provider \*must\* log this so that end-to-end requests can be correlated across Azure. | 1st and 3rd party | 
 | x-ms-client-ip-address | Always added . Set to the client IP address used in the request; this is required since the resource provider will not have access to the client IP. | 1st and 3rd party |
@@ -32,6 +32,7 @@ The resource provider proxy will preserve all the client requests headers, with 
 | x-ms-client-identity-provider | Always added. Set to the identity provider of the client JWT. |1st party only |
 | x-ms-client-wids | Always added. Set to the wids of the client JWT. These identify the admins of the tenant which issued the JWT. | 1st party only |
 | x-ms-client-authentication-methods | Always added. Set to the authentication method references of client JWT. | 1st party only|
+| x-ms-management-group-ancestors | Always added. Set to the management groups that subscription might belong to. | 1st party only|
 
 ## Client Request Headers ##
 
@@ -89,22 +90,17 @@ The resource providers must return the \*code\* and \*message\* fields; however,
 **Response Body**
 
     {
-      "error": {
-        "code": "BadArgument",
-        "message": "The provided database &#39;foo&#39; has an invalid username.",
-        "target": "query",
-        "details": [
-          {
-            "code": "301",
-            "target": "$search"
-            "message": "$search query option not supported",
-          }
-        ]
-        "innererror": {
-          "trace": [...],
-          "context": {...}
+    "error": {
+      "code": "BadArgument",
+      "message": "The provided database &#39;foo&#39; has an invalid username.",
+      "target": "query",
+      "details": [
+        {
+        	"code": "301",
+          "target": "$search"
+         	"message": "$search query option not supported",
         }
-      }
+      ]
     }
 
 
@@ -114,13 +110,12 @@ The resource providers must return the \*code\* and \*message\* fields; however,
 | code | Required, string.String that can be used to programmatically identify the error. Some will be standardized for all Azure REST services, some will be domain specific. These error code should not be localized, but are typically a string like &quot;BadArgument&quot;, &quot;NotFound&quot;, etc. |
 | target | Optional, string.The target of the particular error (for example, the name of the property in error). |
 | details | Optional, string.An array of JSON objects that MUST contain name/value pairs for code and message, and MAY contain a name/value pair for target, as described above.The contents of this section are service-defined but must adhere to the aforementioned schema. |
-| innererror | Optional, string.The contents of this object are service-defined. Usually this object contains information that will help debug the service. |
 
 ### Max Response Size ###
 
-In all the calls that ARM makes to the resource provider, the maximum size of a response that ARM will accept from the resource providers is 4 MB.
+In all the calls that ARM makes to the resource provider, the maximum size of a response that ARM will accept from the resource providers is 8 MB.
 
-Any response greater than 4 MB in size will be dropped by ARM, and **500 Internal Server Error** will be returned to the client.  In general, APIs exposed by the resource provider should be designed to transmit relatively little data in keeping with the management nature of the API.
+Any response greater than 8 MB in size will be dropped by ARM, and **500 Internal Server Error** will be returned to the client.  In general, APIs exposed by the resource provider should be designed to transmit relatively little data in keeping with the management nature of the API.
 
 ### Transfer-Encoding ###
 

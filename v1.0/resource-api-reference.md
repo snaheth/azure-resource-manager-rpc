@@ -16,7 +16,7 @@ These are the APIs that are implemented by the resource provider. Below is the d
 | Argument | Description |
 | --- | --- |
 | subscriptionId | The subscriptionId for the Azure user. |
-| resourceGroupName | The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name must be no longer than 80 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and &#39;-&#39;, &#39;\_&#39;, &#39;(&#39;, &#39;)&#39; and&#39;.&#39;.  Note that the name cannot end with &#39;.&#39; |
+| resourceGroupName | The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name must be no longer than 90 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and &#39;-&#39;, &#39;\_&#39;, &#39;(&#39;, &#39;)&#39; and&#39;.&#39;.  Note that the name cannot end with &#39;.&#39; |
 | resourceProviderNamespace | The resource provider namespace can only be ASCII alphanumeric characters and the &quot;.&quot; character. |
 | resourceType | The type of the resource – the resource providers declare the resource types they support at the time of registering with Azure. The resourceType should follow the lowerCamelCase convention and be plural (e.g. virtualMachines, resourceGroups, jobCollections, virtualNetworks).  The resource type can only be ASCII alphanumeric characters. |
 | resourceName | The name of the resource. The name cannot include:   &#39;&lt;&#39;, &#39;&gt;&#39;, &#39;%&#39;, &#39;&amp;&#39;, &#39;:&#39;, &#39;\\&#39;, &#39;?&#39;, &#39;/&#39; OR any control characters. The max length is 260 characters. All other characters are allowed. The RP is expected to be more restrictive and have its own validation. |
@@ -52,21 +52,19 @@ The resource group name and resource name **MUST** come from the URL and not the
       "tags": {
         "key": "value"
       },
-      "properties": {
-        "comment": "Resource defined structure" 
-      },
-      "sku": {
-        "name": "sku code, such as P3",
-        "capacity": {number}
-      },
-      "plan": {
-        "name": "User defined name of the 3rd Party Artifact",
+      "sku" : {
+        "name" : "sku code, such as P3",
+        "capacity" : {number}
+     },
+     "plan" : {
+       "name": "User defined name of the 3rd Party Artifact",
         "publisher": "Publisher of the 3rd Party Artifact ",
-        "product": "OfferID for the 3rd Party Artifact ",
-        "promotionCode": "Promotion Code",
-        "version": "Version of the 3rd Party Artifact"
-      }
-      "kind": "resource kind"
+    		"product": "OfferID for the 3rd Party Artifact ",
+    		"promotionCode": "Promotion Code",
+    		"version" : "Version of the 3rd Party Artifact"
+    }
+     "kind" : "resource kind",
+     "managedBy": "resource-id"
     }
     
 | **Field** | Description |
@@ -86,6 +84,7 @@ The resource group name and resource name **MUST** come from the URL and not the
 | **plan.product** | Required (if plan is specified), string. The 3rd Party artifact that is being procured. E.g. NewRelic. Product maps to the OfferID specified for the artifact at the time of Data Market onboarding. |
 | **plan.promotionCode** | Optional, string. A publisher provided promotion code as provisioned in Data Market for the said product/artifact. |
 | **plan.version** | Optional, string. The version of the desired product/artifact.  Ignored by commerce. |
+| **managedBy** |  Optional, string. Indicates if this resource is managed by another azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. | 
 
 ##### Representing SKUs ####
 
@@ -106,25 +105,26 @@ Every resource can have a section with properties. These are the settings that d
 PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}?api-version=2016-01-01
 
     {
-      "location": "North US",
-      "tags": {
+     	"location": "North US",
+     	"tags": {
         "department": "Finance",
         "app": "Quarterly Reports",
         "owner": "chlama"
-      },
-      "sku": {  
-        "name": "standard"  
-      },
-      "properties": {  
-        "quota": {  
-          "maxJobCount": "10",  
-          "maxRecurrence": {  
-            "Frequency": "minute",  
-            "interval": "1"  
-          }  
-        }  
-      }  
-    }
+       },
+       	"sku": {  
+          "name": "standard"  
+        },
+        "managedBy" : "/subscriptions/{id}/resourceGroups/{group}/providers/{rpns}/{type}/{name}"
+     	  "properties": {  
+          "quota": {  
+            "maxJobCount": "10",  
+            "maxRecurrence": {  
+              "Frequency": "minute",  
+              "interval": "1"  
+              }  
+            }
+    	  }  
+     }
 
 Since different types of resources have different settings, the contents of this field are left under the control of the resource provider and ARM will never be made aware of these fields. However, in the case of ARM templates, the template execution engine will replace all parameters and expressions \*before\* passing the instantiated object to the RPs.
 
@@ -265,7 +265,7 @@ Returns a resource belonging to a resource group. Resource types can be nested a
 
 | Method | Request URI |
 | --- | --- |
-| GET | https://<endpoint>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}?api-version={api-version} |
+| GET | https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}?api-version={api-version} |
 
 #### Request - Get resource collection under resource group ####
 
@@ -355,34 +355,35 @@ The paging approach required by ARM is server side paging, as described below.
           "name": "Name1",
           "type": "{resourceProviderNamespace}/{resourceType}",
           "location": "North US"
-          "properties": {
-            "comment": "Resource defined structure"
+          "properties": { 
+            "comment: "Resource defined structure" 
           },
-          "kind": "resource kind"
+          "kind" : "resource kind"
         },
         {
           "id": "{url to resource 2}",
           "name": "Name2",
           "type": "{resourceProviderNamespace}/{resourceType}",
           "location": "North US",
-          "properties": {
-            "comment": "Resource defined structure"
-          },
-          "kind": "resource kind"
+          "properties": { 
+            "comment: "Resource defined structure" 
+           },
+          "kind" : "resource kind"
         }
       ],
-      "nextLink": "{originalRequestUrl}?$skipToken={opaqueString}"
+      "nextLink": "{refererHeaderUrl}?$skipToken={opaqueString}"
     }
 
 The nextLink field is expected to point to the URL the client should use to fetch the next page (per server side paging). This matches the OData guidelines for paged responses [here](http://docs.oasis-open.org/odata/odata-json-format/v4.0/cos01/odata-json-format-v4.0-cos01.html#_Toc372793055). If a resource provider does not support paging, it should return the same body (JSON object with &quot;value&quot; property) but omit nextLink entirely (or set to null, \*not\* empty string) for future compatibility.
 
 The nextLink should be implemented using following query parameters:
 
-- skipToken: opaque token that allows the resource provider to skip resources already enumerated. This value is defined and returned by the RP after first request via nextLink.
-- top: the optional client query parameter which defines the maximum number of records to be returned by the server.
+- $skipToken: opaque token that allows the resource provider to skip resources already enumerated. This value is defined and returned by the RP after first request via nextLink.
+- $top: the optional client query parameter which defines the maximum number of records to be returned by the server.
 
 Implementation details:
 
+- The refererHeaderUrl used to format the nextLink is the URI provided by ARM in the referer header, and not the request URI. See [here](common-api-details.md#proxy-request-header-modifications) for more information on the referer header.
 - NextLink may include all the query parameters (specifically OData $filter) used by the client in the first query.
 - Server may return less records than requested with nextLink. Returning zero records with NextLink is an acceptable response.
 - Clients must fetch records until the nextLink is not returned back / null. Clients should never rely on number of returned records to determinate if pagination is completed.
@@ -403,7 +404,8 @@ As some examples: (1) the website RP may require that all websites belonging to 
 
 **Arguments**
 
-[Description here] (resource-api-reference.md#crud-arguments-id).
+[Description here](#arguments-for-crud-on-resource).
+
 
 **Request Headers**
 
@@ -422,7 +424,7 @@ See common client request headers.
 | Element name | Description |
 | --- | --- |
 | targetResourceGroup | **Required** , string.The target resource group id to move the resources to.  The target resource group cannot be the same as the current (source) resource group. If the subscriptionId is different than the current resource group&#39;s subscriptionId, then additional checks will be performed in the frontdoor. |
-| resources | **Required** , array of resource ids.The collection of resources to move to the target resource group.  The resources must be from the current resource group from the request URL. At most 250 resources can be moved with a single request. The resources can span several different resource providers and resource types. |
+| resources | **Required** , array of resource ids.The collection of resources to move to the target resource group.  The resources must be from the current resource group from the request URL. At most 800 resources can be moved with a single request. The resources can span several different resource providers and resource types. |
 
 #### Response ####
 
@@ -443,7 +445,7 @@ ARM will perform some basic validation before forwarding the request to the reso
 | One of the values in the resources collection is not from current resource group. | 400 |
 | One of the resources in the resources list is a child resource (only top level resources can be moved; their children are assumed to be moved). | 400 |
 | The resource type does not support move. | 400 |
-| Too many resources are present in the request (250 is the limit). | 400 |
+| Too many resources are present in the request (800 is the limit). | 400 |
 | The resource move would cause the quota for the subscription / resource group quotas to be exceeded. | 409 |
 | The source or target resource group is locked (e.g. move already in progress, resource group is being deleted). | 409 |
 | Target resource group already has resource with the same Id as given in the request. | 409 |

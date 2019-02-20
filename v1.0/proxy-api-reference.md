@@ -137,32 +137,34 @@ This API is unique in that it is not scoped to a subscription – it is consider
 #### Response ####
 
     {
-      "value": [
-        {
-          "name": "{resourceProviderNamespace}/{resourceType}/{read|write|delete|action}",
-          "display": {
-            "provider": "{Name of the provider for display purposes}",
-            "resource": "{Name of the resource type for display purposes}",
-            "operation": "{Name of the operation for display purposes}",
-            "description": "{Description of the operation for display purposes}"
-          },
-          "origin": "user|system|user,system",
-          "properties": { }
-        },
+    "value": [
+    {
+      "name": "{resourceProviderNamespace}/{resourceType}/{read|write|delete|action}",
+	    "isDataAction": "false",
+      "display": {
+        "provider": "{Name of the provider for display purposes}",
+        "resource": "{Name of the resource type for display purposes}",
+        "operation": "{Name of the operation for display purposes}",
+        "description": "{Description of the operation for display purposes}"
+      },
 
-        {
-          "name": "{resourceProviderNamespace}/{resourceType}/{read|write|delete|action}",
-          "display": {
-            "provider": "{Name of the provider for display purposes}",
-            "resource": "{Name of the resource type for display purposes}",
-            "operation": "{Name of the operation for display purposes}",
-            "description": "{Description of the operation for display purposes}"
-          },
-          "origin": "user|system|user,system",
-          "properties": { }
-        },
-      ],
-      "nextLink": "{originalRequestUrl}?$skipToken={opaqueString}"
+      "origin": "user|system|user,system",
+      "properties": { }
+    },
+    {
+      "name": "{resourceProviderNamespace}/{resourceType}/{read|write|delete|action}",
+	    "isDataAction": "false",
+      "display": {
+        "provider": "{Name of the provider for display purposes}",
+        "resource": "{Name of the resource type for display purposes}",
+        "operation": "{Name of the operation for display purposes}",
+        "description": "{Description of the operation for display purposes}"
+      },
+      "origin": "user|system|user,system",
+      "properties": { }
+    },
+    ],
+    "nextLink": "{originalRequestUrl}?$skipToken={opaqueString}"
     }
 
 | Element name | Description |
@@ -174,6 +176,7 @@ This API is unique in that it is not scoped to a subscription – it is consider
 | display.operation  | **Required**.The localized friendly name for the operation, as it should be shown to the user. It should be concise (to fit in drop downs) but clear (i.e. self-documenting). It should use Title Casing and include the entity/resource to which it applies.<br/>  Prescriptive guidance: <br/> Read {Resource Type Name} <br/>Create or Update {Resource Type Name} <br/>Delete {Resource Type Name} <br/> <User Friendly Action Name> {Resource Type Name} <br/> As examples:Read Virtual Machine <br/>Create or Update Virtual Machine <br/>Delete Virtual Machine <br/> Restart Virtual Machine  |
 | display.description | **Required**.The localized friendly description for the operation, as it should be shown to the user. It should be thorough, yet concise – it will be used in tool tips and detailed views.<br/>  Prescriptive guidance for resources: <br/>Read any <display.resource> <br/>Create or Update any <display.resource> <br/>Delete any <display.resource> <br/> <User Friendly Action Name> any <display.resources>  |
 | origin | **Optional.** The intended executor of the operation; governs the display of the operation in the RBAC UX and the audit logs UX.<br/> Default value is "user,system"<br/> Details below |
+| isDataAction | **Required.** Indicates whether the operation applies to data-plane. Set the value to `"true"` for data-plane operations and `"false"` for ARM/control-plane operations. |
 | properties | **Reserved for future use.  Optional.** |
 
 #### Origin details ####
