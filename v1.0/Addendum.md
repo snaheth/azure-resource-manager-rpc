@@ -193,7 +193,7 @@ or underneath a subscription level operations URL:
 
 https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/providers/{namespace}/locations/westus/operationresults/{operationId}?api-version={api-version}
 
-The _endpoint_ can be determined by the hostname of the URI in the _referrer_ header.
+The _endpoint_ can be determined by the hostname of the URI in the _referer_ header.
 
 After this maximum time, clients will give up and treat the operation as timed out. Please note that the location header needs to be the full absolute URI.
 
