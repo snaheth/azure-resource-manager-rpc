@@ -50,21 +50,18 @@ The resource group name and resource name **MUST** come from the URL and not the
     {
       "location": "North US",
       "tags": {
-          	"key": "value"
-    },
-      "properties": { 
-            	"comment: Resource defined structure" 
+        "key": "value"
       },
       "sku" : {
-           	"name" : "sku code, such as P3",
-           	"capacity" : {number}
+        "name" : "sku code, such as P3",
+        "capacity" : {number}
      },
      "plan" : {
-        	"name": "User defined name of the 3rd Party Artifact",
-          "publisher": "Publisher of the 3rd Party Artifact ",
-    		  "product": "OfferID for the 3rd Party Artifact ",
-    		  "promotionCode": "Promotion Code",
-    		  "version" : "Version of the 3rd Party Artifact"
+       "name": "User defined name of the 3rd Party Artifact",
+        "publisher": "Publisher of the 3rd Party Artifact ",
+    		"product": "OfferID for the 3rd Party Artifact ",
+    		"promotionCode": "Promotion Code",
+    		"version" : "Version of the 3rd Party Artifact"
     }
      "kind" : "resource kind",
      "managedBy": "resource-id"
@@ -110,24 +107,24 @@ PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{
     {
      	"location": "North US",
      	"tags": {
-         "department": "Finance",
-         "app": "Quarterly Reports",
-         "owner": "chlama"
+        "department": "Finance",
+        "app": "Quarterly Reports",
+        "owner": "chlama"
        },
        	"sku": {  
-           "name": "standard"  
+          "name": "standard"  
         },
         "managedBy" : "/subscriptions/{id}/resourceGroups/{group}/providers/{rpns}/{type}/{name}"
-     	"properties": {  
-        "quota": {  
-           "maxJobCount": "10",  
-           "maxRecurrence": {  
+     	  "properties": {  
+          "quota": {  
+            "maxJobCount": "10",  
+            "maxRecurrence": {  
               "Frequency": "minute",  
               "interval": "1"  
               }  
             }
-    	}  
-    }
+    	  }  
+     }
 
 Since different types of resources have different settings, the contents of this field are left under the control of the resource provider and ARM will never be made aware of these fields. However, in the case of ARM templates, the template execution engine will replace all parameters and expressions \*before\* passing the instantiated object to the RPs.
 
@@ -212,10 +209,10 @@ In addition, the PATCH operation must be supported for the SKU property to suppo
 **Request Body**
 
     {
-    "sku" : {
-      	"name" : "F0",
-      	"capacity" : 1
-       }
+      "sku": {
+        "name": "F0",
+        "capacity": 1
+      }
     }
 
 ### Delete Resource ###
@@ -323,16 +320,18 @@ Headers common to all responses.
 **Response Body**
 
     {
-     "id": "/subscriptions/{id}/resourceGroups/{group}/providers/{rpns}/{type}/{name}",
-     "name": "{name}",
-     "type": "{resourceProviderNamespace}/{resourceType}",
-     "location": "North US",
-     "tags": {
-              "key1": "value 1",
-              "key2": "value 2"
-       },
-    "kind" : "resource kind",
-    "properties": { "comment: "Resource defined structure" }
+      "id": "/subscriptions/{id}/resourceGroups/{group}/providers/{rpns}/{type}/{name}",
+      "name": "{name}",
+      "type": "{resourceProviderNamespace}/{resourceType}",
+      "location": "North US",
+      "tags": {
+        "key1": "value 1",
+        "key2": "value 2"
+      },
+      "kind": "resource kind",
+      "properties": {
+        "comment": "Resource defined structure"
+      }
     }
 
 For a detailed explanation of each field in the response body, please refer to the request body description in the PUT resource section. The only GET specific properties are "name," "type" and "id."
@@ -356,7 +355,9 @@ The paging approach required by ARM is server side paging, as described below.
           "name": "Name1",
           "type": "{resourceProviderNamespace}/{resourceType}",
           "location": "North US"
-          "properties": { "comment: "Resource defined structure" },
+          "properties": { 
+            "comment: "Resource defined structure" 
+          },
           "kind" : "resource kind"
         },
         {
@@ -364,7 +365,9 @@ The paging approach required by ARM is server side paging, as described below.
           "name": "Name2",
           "type": "{resourceProviderNamespace}/{resourceType}",
           "location": "North US",
-          "properties": { "comment: "Resource defined structure" }.
+          "properties": { 
+            "comment: "Resource defined structure" 
+           },
           "kind" : "resource kind"
         }
       ],
@@ -411,12 +414,11 @@ See common client request headers.
 **Request Body**
 
     {
-    "targetResourceGroup": "/subscriptions/{targetId}/resourceGroups/{targetName}",
-    "resources":
-    [
-     "/subscriptions/{id}/resourceGroups/{source}/providers/{namespace}/{type}/{name}",
-     "/subscriptions/{id}/resourceGroups/{source}/providers/{namespace}/{type}/{name}"
-    ]
+      "targetResourceGroup": "/subscriptions/{targetId}/resourceGroups/{targetName}",
+      "resources": [
+        "/subscriptions/{id}/resourceGroups/{source}/providers/{namespace}/{type}/{name}",
+        "/subscriptions/{id}/resourceGroups/{source}/providers/{namespace}/{type}/{name}"
+      ]
     }
 
 | Element name | Description |

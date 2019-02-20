@@ -157,17 +157,16 @@ An example of the response body can be seen below:
 **Response Body**
 
     {
-    "location": "North US",
-    "tags": {
-      "key1": "value 1",
-      "key2": "value 2"
-     },
+      "location": "North US",
+      "tags": {
+        "key1": "value 1",
+        "key2": "value 2"
+      },
 
-    "properties": {
-    "provisioningState": "Succeeded",
-    "comment: "Resource defined structure"
-
-     },
+      "properties": {
+        "provisioningState": "Succeeded",
+        "comment": "Resource defined structure"
+      },
     }
 
 If the user does a PUT with provisioningState (e.g. after doing a GET), the resource provider should treat the field as a normal readonly property.
@@ -212,23 +211,22 @@ After this maximum time, clients will give up and treat the operation as timed o
 The operation resource format returned by the Azure-AsyncOperation header is as follows-
 
     {
-    "id": "/subscriptions/id/locations/westus/operationsStatus/sameguid",
-    "name": "sameguid",
-    "status" : "RP defined values | Succeeded | Failed | Canceled",
-    "startTime": "<DateLiteral per ISO8601>",
-    "endTime": "<DateLiteral per ISO8601>",
-    "percentComplete": <double between 0 and 100>
-    "properties": {
+      "id": "/subscriptions/id/locations/westus/operationsStatus/sameguid",
+      "name": "sameguid",
+      "status" : "RP defined values | Succeeded | Failed | Canceled",
+      "startTime": "<DateLiteral per ISO8601>",
+      "endTime": "<DateLiteral per ISO8601>",
+      "percentComplete": <double between 0 and 100>
+      "properties": {
         /\* The resource provider can choose the values here, but it should only be
-           returned on a successful operation (status being "Succeeded"). \*/
-    },
-    "error" : {
+            returned on a successful operation (status being "Succeeded"). \*/
+      },
+      "error" : {
         /\* This is the OData v4 format, used by the RPC and will go into the
-         v2.2 Azure REST API guidelines \*/
+            v2.2 Azure REST API guidelines \*/
         "code": "BadArgument",
         "message": "The provided database &#39;foo&#39; has an invalid username."
-    }
-
+      }
     }
 
 **The operation resource should be used for Azure-AsyncOperation header**. Location header should have different behavior described above.
@@ -374,38 +372,37 @@ Headers common to all responses.
 **Response Body**
 
     {
-    "value": [
+      "value": [
         {
-            "resourceType": "type for sku"
-            "sku": {
-                "name": "sku name",
-                "tier": "sku tier"
-            },
+          "resourceType": "type for sku"
+          "sku": {
+            "name": "sku name",
+            "tier": "sku tier"
+          },
 
-            "capacity": {
-                "minimum": min,
-                "maximum": max,
-                "default": default,
-                "scaleType": "automatic|manual|none"
-            }
+          "capacity": {
+            "minimum": min,
+            "maximum": max,
+            "default": default,
+            "scaleType": "automatic|manual|none"
+          }
         },
 
         {
-            "resourceType": "type for sku"
-            "sku": {
-                "name": "sku name",
-                "tier": "sku tier"
-            },
+          "resourceType": "type for sku"
+          "sku": {
+            "name": "sku name",
+            "tier": "sku tier"
+          },
 
-            "capacity": {
-                "minimum": min,
-                "maximum": max,
-                "default": default,
-                "scaleType": "automatic|manual|none"
-
-            }
+          "capacity": {
+            "minimum": min,
+            "maximum": max,
+            "default": default,
+            "scaleType": "automatic|manual|none"
+          }
         }
-    ]
+      ]
     }
 
 For a detailed explanation of each field in the response body, please refer to the request body description in the PUT resource section. The only GET specific properties are "name", "type" and "id"
