@@ -169,7 +169,7 @@ This API is unique in that it is not scoped to a subscription – it is consider
 
 | Element name | Description |
 | --- | --- |
-| name | **Required**.The name of the operation being performed on this particular object. It should match the action name that appears in RBAC / the event service.  Examples of operations include:- <ul><li>Microsoft.Compute/virtualMachines/capture/action</li> <li>Microsoft.Compute/virtualMachines/restart/action</li> <li>Microsoft.Compute/virtualMachines/write</li> <li>Microsoft.Compute/virtualMachines/read</li> <li>Microsoft.Compute/virtualMachines/delete</li></ul> Each action should include, in order: <ul> <li> Resource Provider Namespace</li> <li> Type hierarchy for which the action applies (e.g. server/databases for a SQL Azure database)</li> <li>If an &quot;action,&quot; the custom action name (e.g. capture / restart / etc.)</li> <li>Read, Write, Action or Delete indicating which type applies.</li> <ul><li>If it is a PUT/PATCH on a collection or named value, Write should be used.</li> <li> If it is a GET, Read should be used.</li> <li>If it is a DELETE, Delete should be used.</li> <li>If it is a POST, Action should be used.</li></ul> </ul> As an example: <ul> <li>Microsoft.Compute/virtualMachines/extensions/capture/action</li> <ul> <li>Namespace: Microsoft.Compute</li> <li>Resource Type: virtualMachines/extensions</li> <li>Custom action name: capture</li> <li>Action verb: action (because it is a POST)</li></ul> <li>Microsoft.Compute/virtualMachines/extensions/write</li><ul><li>Namespace: Microsoft.Compute</li> <li>Resource Type: virtualMachines/extensions</li> <li>Custom action name: \*none\*</li> <li>Action verb: write (because it is a PUT/PATCH)</li> </ul> </ul> As a note: all resource providers would need to include the "{Resource Provider Namespace}/register/action" operation in their response. This API is used to register for their service, and should include details about the operation (e.g. a localized name for the resource provider + any special considerations like PII release). Example values can be seen below:<ul> <li>Resource: "Storage Resource Provider" </li> <li>Operation: "Registers the Storage Resource Provider"</li> <li>Description: "Registers the subscription for the storage resource provider and enables the creation of storage accounts." </li> </ul> |
+| name | **Required**.The name of the operation being performed on this particular object. It should match the action name that appears in RBAC / the event service.  Examples of operations include:- <ul><li>Microsoft.Compute/virtualMachines/capture/action</li> <li>Microsoft.Compute/virtualMachines/restart/action</li> <li>Microsoft.Compute/virtualMachines/write</li> <li>Microsoft.Compute/virtualMachines/read</li> <li>Microsoft.Compute/virtualMachines/delete</li></ul> Each action should include, in order: <ul> <li> Resource Provider Namespace</li> <li> Type hierarchy for which the action applies (e.g. server/databases for a SQL Azure database)</li> <li>If an &quot;action,&quot; the custom action name (e.g. capture / restart / etc.)</li> <li>Read, Write, Action or Delete indicating which type applies.</li> <ul><li>If it is a PUT/PATCH on a collection or named value, Write should be used.</li> <li> If it is a GET, Read should be used.</li> <li>If it is a DELETE, Delete should be used.</li> <li>If it is a POST, Action should be used.</li></ul> </ul> As an example: <ul> <li>Microsoft.Compute/virtualMachines/extensions/capture/action</li> <ul> <li>Namespace: Microsoft.Compute</li> <li>Resource Type: virtualMachines/extensions</li> <li>Custom action name: capture</li> <li>Action verb: action (because it is a POST)</li></ul> <li>Microsoft.Compute/virtualMachines/extensions/write</li><ul><li>Namespace: Microsoft.Compute</li> <li>Resource Type: virtualMachines/extensions</li> <li>Custom action name: \*none\*</li> <li>Action verb: write (because it is a PUT/PATCH)</li> </ul> </ul> 
 | display | **Required.** Contains the localized display information for this particular operation / action. These value will be used by several clients for (1) custom role definitions for RBAC; (2) complex query filters for the event service; and (3) audit history / records for management operations. |
 | display.provider | **Required**.The localized friendly form of the resource provider name – it is expected to also include the publisher/company responsible. It should use Title Casing and begin with "Microsoft" for 1st party services.  e.g. "Microsoft Monitoring Insights" or "Microsoft Compute." |
 | display.resource | **Required**.The localized friendly form of the resource type related to this action/operation – it should match the public documentation for the resource provider. It should use Title Casing – for examples, please refer to the "name" section.<br/>  **This value should be unique for a particular URL type** (e.g. nested types should \*not\* reuse their parent&#39;s display.resource field). <br/> e.g. "Virtual Machines" or "Scheduler Job Collections", or "Virtual Machine VM Sizes" or "Scheduler Jobs" |
@@ -190,6 +190,24 @@ This API is unique in that it is not scoped to a subscription – it is consider
 <tr><td>system</td><td>svc backend</td><td>No</td><td>Yes</td></tr>
 <tr><td>user, system</td><td>end user/service principal/ svc backend</td><td>Yes</td><td>Yes</td></tr>
 </table> 
+
+#### Required responses ####
+All resource providers would need to include the "{Resource Provider Namespace}/register/action" operation in their response. This API is used to register for their service, and should include details about the operation (e.g. a localized name for the resource provider + any special considerations like PII release). Example values can be seen below:
+
+    {
+        "value": [
+            {
+                "name": "Microsoft.Storage/operations/read",
+                "isDataAction": "false",
+                "display": {
+                    "provider": "Storage Resource Provider",
+                    "resource": "Microsoft.Storage",
+                    "operation": "Registers the Storage Resource Provider",
+                    "description": "Registers the subscription for the storage resource provider and enables the creation of storage accounts."
+                }
+            }
+        ]
+    }
 
 ### Check Name Availability Requests ###
 
