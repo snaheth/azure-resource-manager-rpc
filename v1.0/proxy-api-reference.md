@@ -197,7 +197,7 @@ All resource providers would need to include the "{Resource Provider Namespace}/
     {
         "value": [
             {
-                "name": "Microsoft.Storage/operations/read",
+                "name": "Microsoft.Storage/register/action",
                 "isDataAction": "false",
                 "display": {
                     "provider": "Storage Resource Provider",
