@@ -27,9 +27,9 @@ Resource providers should associate the correlation Id and client request Id wit
 This will enable end-to-end troubleshooting from the portal, through CSM and to the RP, via four key headers:
 
 1. x-ms-client-request-id: associated with a logical action in the client; e.g. loading the portal monitoring part may have a single client request id for many calls to ARM (e.g. load VMs + load metric definitions + load metrics)
-2. x-ms-correlation-id: associated with a logical action in ARM; e.g. deleting a resource group or running a template
+2. x-ms-correlation-request-id: associated with a logical action in ARM; e.g. deleting a resource group or running a template
 3. x-ms-request-id: returned by the RP per request; typically maps to the RP's ActivityId
-4. x-ms-routing-id: maps to ARM's activity id (which is not otherwise exposed). This maps to implementation boundaries in ARM / the platform –RPs should not use this as their ActivityId.
+4. x-ms-routing-request-id: maps to ARM's activity id (which is not otherwise exposed). This maps to implementation boundaries in ARM / the platform –RPs should not use this as their ActivityId.
 
 ## ETags for Resources ##
 
