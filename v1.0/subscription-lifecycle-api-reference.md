@@ -27,7 +27,7 @@ This API uses the &quot;system&quot; version of 2.0 because it can be triggered 
     {
       "state": "Registered" | "Unregistered" | "Warned" | "Suspended" | "Deleted",
 
-      "registrationDate": "Tue, 15 Nov 1994 08:12:31 GMT"
+      "registrationDate": "Tue, 15 Nov 1994 08:12:31 GMT",
 
       "properties": {
         "tenantId":"ac430efe-1866-4124-9ed9-ee67f9cb75db",
@@ -38,7 +38,9 @@ This API uses the &quot;system&quot; version of 2.0 because it can be triggered 
             "name": "<featureName>",
             "state": "Registered"
           }
-        ]
+        ],
+        "subscriptionSpendingLimit":"True",
+        "subscriptionAccountOwner":"account@company.com",
         "managedByTenants": [
           {
             "tenantId": "<managedByTenantId>"
@@ -53,8 +55,10 @@ This API uses the &quot;system&quot; version of 2.0 because it can be triggered 
 | **properties** | Required.Property bag contains other name/value pairs that can be used for telemetry and logging. The resource provider should handle unexpected property key/value pairs without issue, as we will introduce new metadata without updating the contract version. The value inside the properties envelope may be a complex type / object / token itself. |
 | **properties.tenantId** | Optional.The AAD directory/tenant to which the subscription belongs. |
 | **properties.locationPlacementId** | Optional.The placement requirement for the subscription based on its country of origin / offer type / offer category / etc. This is used in geo-fencing of certain regions or regulatory boundaries (e.g. Australia ring-fencing). |
-| **properties.quotaId** | Optional.The quota requirement for the subscription based on the offer type / category (e.g. free vs. pay-as-you-go). This can be used to inform quota information for the subscription (e.g. max # of resource groups or max # of virtual machines. |
-| **Properties.registeredFeatures** | Optional.All AFEC features that the subscriptions has been registered under RP namespace and platform namespace (e.g. Microsoft.Resources).  Null or an empty array would mean that there are no registered features in the subscription. |
+| **properties.quotaId** | Optional.The quota requirement for the subscription based on the offer type / category (e.g. free vs. pay-as-you-go). This can be used to inform quota information for the subscription (e.g. max # of resource groups or max # of virtual machines. | **
+| **Properties.subscriptionSpendingLimit** | Boolean for subscription spending limit
+| **Properties.subscriptiongAccountOwner** | string for Account owner
+| **Properties.registeredFeatures** | Optional.All AFEC features that the subscriptions has been registered under RP namespace and platform namespace (Microsoft.Resources).  Null or an empty array would mean that there are no registered features in the subscription. | **Properties.availabilityZones** | Optional.Physical to logical zone mapping (need to add above).  it will be per-region.|
 | **Properties.managedByTenants** | Optional.All tenants managing the subscription. Null or empty means that there are no managing tenants. |
 
 ### Response
