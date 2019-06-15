@@ -27,7 +27,7 @@ This API uses the &quot;system&quot; version of 2.0 because it can be triggered 
     {
       "state": "Registered" | "Unregistered" | "Warned" | "Suspended" | "Deleted",
 
-      "registrationDate": "Tue, 15 Nov 1994 08:12:31 GMT"
+      "registrationDate": "Tue, 15 Nov 1994 08:12:31 GMT",
 
       "properties": {
         "tenantId":"ac430efe-1866-4124-9ed9-ee67f9cb75db",
@@ -40,7 +40,12 @@ This API uses the &quot;system&quot; version of 2.0 because it can be triggered 
           }
         ],
         "subscriptionSpendingLimit":"True",
-        "subscriptionAccountOwner":"account@company.com"
+        "subscriptionAccountOwner":"account@company.com",
+        "managedByTenants": [
+          {
+            "tenantId": "<managedByTenantId>"
+          }
+        ]
       }
     }
 
@@ -53,7 +58,8 @@ This API uses the &quot;system&quot; version of 2.0 because it can be triggered 
 | **properties.quotaId** | Optional.The quota requirement for the subscription based on the offer type / category (e.g. free vs. pay-as-you-go). This can be used to inform quota information for the subscription (e.g. max # of resource groups or max # of virtual machines. | **
 | **Properties.subscriptionSpendingLimit** | Boolean for subscription spending limit
 | **Properties.subscriptiongAccountOwner** | string for Account owner
-| **Properties.registeredFeatures** | Optional.All AFEC features that the subscriptions has been registered under RP namespace and platform namespace (Microsoft.Resources).  Null or an empty array would mean that there are no registered features in the subscription. | **Properties.availabilityZones** | Optional.Physical to logical zone mapping (need to add above).  it will be per-region.
+| **Properties.registeredFeatures** | Optional.All AFEC features that the subscriptions has been registered under RP namespace and platform namespace (Microsoft.Resources).  Null or an empty array would mean that there are no registered features in the subscription. | **Properties.availabilityZones** | Optional.Physical to logical zone mapping (need to add above).  it will be per-region.|
+| **Properties.managedByTenants** | Optional.All tenants managing the subscription. Null or empty means that there are no managing tenants. |
 
 ### Response
 
