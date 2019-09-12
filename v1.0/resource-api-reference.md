@@ -311,7 +311,7 @@ If the resource does not exist, 404 (NotFound) should be returned. For other err
 
 If the resource group does not exist, 404 (NotFound) will be returned by the proxy \*without\* reaching the resource provider.
 
-If the subscription does not exist, 404 (NotFound) will be returned by the proxy \*without\* reaching the resource provider. If the subscription is not registered with the resource provider, it should return a 404 (NotFound) or an empty collection. It must not return a 5xx status code or 403.
+If the subscription does not exist, 404 (NotFound) will be returned by the proxy \*without\* reaching the resource provider. If the subscription is not registered with the resource provider, it should return a 404 (NotFound) or an empty collection. When there are no types and all parent entities exist, it should return an empty collection. It must not return a 5xx status code or 403.
 
 **Response Headers**
 
