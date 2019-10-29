@@ -111,31 +111,41 @@ Some REST operations can take a long time to complete. Although REST is not supp
 
 ## Creating or Updating Resources ##
 
-The API flow for PUT/PATCH should be to:
+The API flow for PUT should be to:
 
-1. Respond to the initial PUT request with a 201 Created or 200 OK (per normal guidance);
-2. Since provisioning is not complete, the PUT response body **MUST** contain a provisioningState set to a non-terminal value (e.g. &quot;Accepted&quot;, or &quot;Created&quot;);
-3. **Optional** : The response headers may include a Azure-AsyncOperation header pointing to an Operation resource (as described below);
-4. Future GETs on the resource that was created should continue to return a 200 Status Code and provisioningState field that is \*non-terminal\* as long as the provisioning is in progress;
+1. Respond to the initial PUT request with a 201 Created or 200 OK (per normal guidance)
+2. Since provisioning is not complete, the PUT response body **MUST** contain a provisioningState set to a non-terminal value (e.g. &quot;Accepted&quot;, or &quot;Created&quot;)
+3. **Optional** : The response headers may include a Azure-AsyncOperation header pointing to an Operation resource (as described below)
+4. Future GETs on the resource that was created should continue to return a 200 Status Code and provisioningState field that is \*non-terminal\* as long as the provisioning is in progress
 5. After the provisioning completes, the provisioningState field should transition to one of the terminal states (as described below).
 6. The provisioningState field should be returned on all future GETs, even after it is complete, until some other operation (e.g. a DELETE or UPDATE) causes it to transition to a non-terminal state.
+
+## Patch Resource ##
+
+The API flow for PATCH on an existing resource should be to:
+
+1. Respond to the initial PATCH request with a 202 Accepted
+2. The response headers **MUST** include a Location header that points to a URL where the ongoing operation can be monitored
+3. **Optional:** The response headers may include an Azure-AsyncOperation header pointing to an Operation resource (as described below).
+4. If a provisioningState field is used for the resource, it **MUST** transition to a non-terminal state like &quot;Updating&quot;
+5. If the PATCH completes successfully, the URL that was returned in the Location header **MUST** now return what would have been a successful response if the API completed (e.g. a response body / header / status code).
 
 ## Delete Resource ##
 
 The API flow should be to:
 
-1. Respond to the initial DELETE request with a 202 Accepted;
-2. The response headers **MUST** include a Location header that points to a URL where the ongoing operation can be monitored;
+1. Respond to the initial DELETE request with a 202 Accepted
+2. The response headers **MUST** include a Location header that points to a URL where the ongoing operation can be monitored
 3. **Optional:** The response headers may include an Azure-AsyncOperation header pointing to an Operation resource (as described below).
-4. If a provisioningState field is used for the resource, it **MUST** transition to a non-terminal state like &quot;Deleting&quot;;
+4. If a provisioningState field is used for the resource, it **MUST** transition to a non-terminal state like &quot;Deleting&quot;
 5. If the DELETE completes successfully, the URL that was returned in the Location header **MUST** now return a 200 OK or 204 NoContent to indicate success and the resource **MUST** disappear.
 
 ## Call Action POST ##
 
 The API flow for POST {resourceUrl}/{action} should be:
 
-1. Respond to the initial POST request with a 202 Accepted;
-2. The response headers **MUST** include a Location header that points to a URL where the ongoing operation can be monitored;
+1. Respond to the initial POST request with a 202 Accepted
+2. The response headers **MUST** include a Location header that points to a URL where the ongoing operation can be monitored
 3. **Optional:** The response headers may include an Azure-AsyncOperation header pointing to an Operation resource (as described below).
 4. If the POST completes successfully, the URL that was returned in the Location header **MUST** now return what would have been a successful response if the API completed (e.g. a response body / header / status code). It is acceptable for this to be a 200/204 NoContent if the action does not require a response (e.g. restarting a VM).
 
