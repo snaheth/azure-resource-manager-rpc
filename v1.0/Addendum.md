@@ -18,7 +18,7 @@
 - [Enumerating SKUs for an existing resource](#enumerating-skus-for-an-existing-resource)
 - [Enumerating SKUs for a new resource](#enumerating-skus-for-a-new-resource)
 - [Correlating resources created on behalf of customer](#correlating-resources-created-on-behalf-of-customer)
-- [Describing location of off-Azure resources](#describing-location-for-off-azure-resources )
+
 
 ## Instrumentation and Tracing across services ## 
 
@@ -437,37 +437,3 @@ Example – When a customer requests an HDInsight cluster with
 7 workers, HDI RP will call CRP to provision 7 VMs. It is now required that HDI
 RP will add the tags to the request for creating the 7 VMs.
 
-## Describing location for off-Azure resources ##
-In some cases, resources described in ARM are hosted outside of an Azure datacenter. In this case, an optional `locationData` property is appropriate to allow the user to supply metadata pertaining to the resource geographic location. 
-
-```
-{
-  "id": "/subscriptions/{id}/resourceGroups/{group}/providers/{rpns}/{type}/{name}",
-  "name": "{name}",
-  "type": "{resourceProviderNamespace}/{resourceType}",
-  "location": "North US",
-  "locationData":{
-    "name":"NC-DC-01",
-    "city":"Charlotte",
-    "district":"NC",
-    "countryOrRegion":"USA"
-   }
-  "tags": {
-    "key1": "value 1",
-    "key2": "value 2"
-  },
-  "kind": "resource kind",
-  "properties": {
-    "comment": "Resource defined structure"
-  }
-}
-```
-`locationData` is an optional, top-level, object property of string fields. Where supported, it should be updatable in both PUT and PATCH methods, and returned on all responses. 
-
-### Properties ###
-| Name  | Description |
-| ------------- | ------------- |
-| name  | a display name for the location  |
-| city  | a name of the location city   |
-| district | the name of a state, province, or other district name   |
-| countryOrRegion | a country or region name for the location. In client experiences, this should not be shortened to "Country." "Country/Region" or "Country or Region"  are appropriate labels. Input values are likely to take one of [these forms](https://en.wikipedia.org/wiki/ISO_3166-1). |
