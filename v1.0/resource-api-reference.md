@@ -55,16 +55,16 @@ The resource group name and resource name **MUST** come from the URL and not the
       "sku" : {
         "name" : "sku code, such as P3",
         "capacity" : {number}
-     },
-     "plan" : {
-       "name": "User defined name of the 3rd Party Artifact",
+      },
+      "plan" : {
+        "name": "User defined name of the 3rd Party Artifact",
         "publisher": "Publisher of the 3rd Party Artifact ",
-    		"product": "OfferID for the 3rd Party Artifact ",
-    		"promotionCode": "Promotion Code",
-    		"version" : "Version of the 3rd Party Artifact"
-    }
-     "kind" : "resource kind",
-     "managedBy": "resource-id"
+        "product": "OfferID for the 3rd Party Artifact ",
+        "promotionCode": "Promotion Code",
+        "version" : "Version of the 3rd Party Artifact"
+      }
+      "kind" : "resource kind",
+      "managedBy": "resource-id"
     }
     
 | **Field** | Description |
