@@ -140,7 +140,7 @@ This API is unique in that it is not scoped to a subscription – it is consider
     {
       "name": "{resourceProviderNamespace}/{resourceType}/{read|write|delete|action}",
       "isDataAction": false,
-      "actionType" : "internalAction",
+      "actionType" : "InternalAction",
       "display": {
         "provider": "{Name of the provider for display purposes}",
         "resource": "{Name of the resource type for display purposes}",
@@ -154,7 +154,7 @@ This API is unique in that it is not scoped to a subscription – it is consider
     {
       "name": "{resourceProviderNamespace}/{resourceType}/{read|write|delete|action}",
       "isDataAction": false,
-      "actionType" : "internalAction",
+      "actionType" : "InternalAction",
       "display": {
         "provider": "{Name of the provider for display purposes}",
         "resource": "{Name of the resource type for display purposes}",
@@ -179,7 +179,7 @@ This API is unique in that it is not scoped to a subscription – it is consider
 | display.description | **Required**.The localized friendly description for the operation, as it should be shown to the user. It should be thorough, yet concise – it will be used in tool tips and detailed views.<br/>  Prescriptive guidance for resources: <br/>Read any <display.resource> <br/>Create or Update any <display.resource> <br/>Delete any <display.resource> <br/> <User Friendly Action Name> any <display.resources>  |
 | origin | **Optional.** The intended executor of the operation; governs the display of the operation in the RBAC UX and the audit logs UX.<br/> Default value is "user,system"<br/> Details below |
 | isDataAction | **Required.** Indicates whether the operation applies to data-plane. Set the value to `"true"` for data-plane operations and `"false"` for ARM/control-plane operations. | 
-| actionType | **Optional** Indicates the action type. Enum: "interalAction" which refers to actions that are for internal only APIs. |
+| actionType | **Optional** Indicates the action type. Enum: "InteralAction" which refers to actions that are for internal only APIs. |
 | properties | **Reserved for future use.  Optional.** |
 
 #### Origin details ####
