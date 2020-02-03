@@ -44,7 +44,7 @@ As of 2020, all Azure resources should implement a read-only `systemData` object
 | lastModifiedAt | the timestamp of resource last modification (UTC) |
 
 
-ARM will provide the values in the `x-ms-arm-resource-system-data` header to the provider on resource write. For ProxyOnly resources, the provider should update any missing values from known metadata. The `systemData` object should be defined in the resource swagger and persisted in provider storage to serve on all responses for the resource (GET, PUT, PATCH)
+ARM will provide the values in the `x-ms-arm-resource-system-data` header to the provider on resource write in JSON format (as shown above). For ProxyOnly resources, the provider should update any missing values from known metadata. The `systemData` object should be defined in the resource swagger and persisted in provider storage to serve on all responses for the resource (GET, PUT, PATCH)
 
 ## Describing location for off-Azure resources ##
 In some cases, resources described in ARM are hosted outside of an Azure datacenter. In this case, an optional `locationData` property is appropriate to allow the user to supply metadata pertaining to the resource geographic location. The locationData property should be in the `properties` object of the resoure.
