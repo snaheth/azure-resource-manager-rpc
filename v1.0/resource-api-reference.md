@@ -37,7 +37,7 @@ ARM does not distinguish between creation and update. The resource provider shou
 
 **Arguments**
 
-[Description here](#arguments-for-crud-on-resource).
+[Common Arguments](#arguments-for-crud-on-resource).
 
 The resource group names and resource names should be matched case insensitively. That means, for example, if a user creates a resource in resource group &quot;rG1&quot;, and then calls a read operation on &quot;RG1&quot;, the same resource should be returned even though the casing differs.
 
@@ -142,7 +142,7 @@ The response includes an HTTP status code, a set of response headers, and a resp
 
 The resource provider should return 200 (OK) or 201 (Created) to indicate that the operation completed successfully synchronously.
 
-If the create request cannot be fulfilled quickly, the RP should return and follow the _Asynchronous Operations_ addendum. The resource provider can return 202 (Accepted) in these cases, but 201 + provisioningState is generally preferred.
+If the create request cannot be fulfilled quickly, the RP should return and follow the [_Asynchronous Operations_ addendum](Addendum.md#asynchronous-operations). The resource provider can return 202 (Accepted) in these cases, but 201 + provisioningState is generally preferred.
 
 If the subscription or the resource group does not exist, 404 (NotFound) should be returned.
 
@@ -172,7 +172,7 @@ Updates a resource belonging to a resource group. ARM requires RPs to support PA
 
 **Arguments**
 
-[Description here](#arguments-for-crud-on-resource).
+[Common Arguments](#arguments-for-crud-on-resource).
 
 **Request Body**
 
@@ -190,7 +190,7 @@ The response includes an HTTP status code, a set of response headers, and a resp
 
 **Status Code**
 
-The resource provider should return 200 (OK) to indicate that the operation completed successfully. 202 (Accepted) can be returned to indicate that the operation will complete asynchronously.
+The resource provider should return 200 (OK) to indicate that the operation completed successfully. 202 (Accepted) can be returned to indicate that the operation will complete [asynchronously](Addendum.md#asynchronous-operations).
 
 If the resource group \*or\* resource does not exist, 404 (NotFound) should be returned.
 
@@ -200,7 +200,7 @@ Headers common to all responses.
 
 **Response Body**
 
-The response body will contain the updated resource (using the existing value + the request in the PATCH) per the Azure REST guidelines [here] (https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md).
+The response body will contain the updated resource (using the existing value + the request in the PATCH) per the Azure REST guidelines [here](https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md).
 
 ##### Representing SKUs #####
 
@@ -227,7 +227,7 @@ Deletes a resource from the resource group.
 
 **Arguments**
 
-[Description here](#arguments-for-crud-on-resource).
+[Common Arguments](#arguments-for-crud-on-resource).
 
 **Request Headers**
 
@@ -245,7 +245,7 @@ The response includes an HTTP status code, a set of response headers, and a resp
 
 The resource provider can return 200 (OK) or 204 (NoContent) to indicate that the operation completed successfully. A 200 (OK) should be returned if the object exists and was deleted successfully; and a 204 (NoContent) should be used if the resource does not exist and the request is well formed.
 
-202 (Accepted) can be returned to indicate that the operation will complete asynchronously.
+202 (Accepted) can be returned to indicate that the operation will complete [asynchronously](Addendum.md#asynchronous-operations).
 
 If the resource group does not exist, 404 (NotFound) will be returned by the proxy layer and will not reach the resource provider. 412 (PreconditionFailed) and other normal REST codes are acceptable as long as they match the REST guidelines.
 
@@ -289,7 +289,7 @@ This allows the resource provider to remain regional and still support this quer
 
 **Arguments**
 
-[Description here](#arguments-for-crud-on-resource).
+[Common Arguments](#arguments-for-crud-on-resource).
 
 **Request Headers**
 
@@ -404,7 +404,7 @@ As some examples: (1) the website RP may require that all websites belonging to 
 
 **Arguments**
 
-[Description here](#arguments-for-crud-on-resource).
+[Common Arguments](#arguments-for-crud-on-resource).
 
 
 **Request Headers**
@@ -453,7 +453,7 @@ ARM will perform some basic validation before forwarding the request to the reso
 
 If the request reaches the resource provider, it should return 200 (OK) to indicate that the operation completed successfully.
 
-202 (Accepted) can be returned to indicate that the operation will [complete asynchronously](Addendum.md#async-id).
+202 (Accepted) can be returned to indicate that the operation will [complete asynchronously](Addendum.md#asynchronous-operations).
 
 If the resource group \*or\* resource does not exist, 404 (NotFound) should be returned. A 400 (BadRequest) can be used if the request does not satisfy the RP specific requirements.
 
