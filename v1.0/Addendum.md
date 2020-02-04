@@ -7,9 +7,9 @@
 - [Nested Resources](#nested-resources) <br/>
 - [Resource Group Deletes](#resource-group-deletes) <br/>
 - [Asynchronous Operations](#asynchronous-operations) <br/>
-- [Creating or Updating Resources](#creating-or-updating-resources)
-- [Delete Resource](#delete-resource)
-- [Call Action POST](#call-action-post)
+- [Creating or Updating Resources Asynchronously](#creating-or-updating-resources-asynchronously)
+- [Delete Resource Asynchronously](#delete-resource-asynchronously)
+- [Call Action POST Asynchronously](#call-action-post-asynchronously)
 - [ProvisioningState property](#provisioningstate-property)
 - [202 Accepted and Location Headers](#202-accepted-and-location-headers)
 - [Operation Resource format](#operation-resource-format)
