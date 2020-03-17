@@ -105,26 +105,26 @@ Every resource can have a section with properties. These are the settings that d
 PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}?api-version=2016-01-01
 
     {
-     	"location": "North US",
-     	"tags": {
+      "location": "North US",
+      "tags": {
         "department": "Finance",
         "app": "Quarterly Reports",
         "owner": "chlama"
-       },
-       	"sku": {  
-          "name": "standard"  
-        },
-        "managedBy" : "/subscriptions/{id}/resourceGroups/{group}/providers/{rpns}/{type}/{name}"
-     	  "properties": {  
-          "quota": {  
-            "maxJobCount": "10",  
-            "maxRecurrence": {  
-              "Frequency": "minute",  
-              "interval": "1"  
-              }  
-            }
-    	  }  
-     }
+      },
+      "sku": {
+        "name": "standard"
+      },
+      "managedBy" : "/subscriptions/{id}/resourceGroups/{group}/providers/{rpns}/{type}/{name}"
+      "properties": {
+        "quota": {
+          "maxJobCount": "10",
+          "maxRecurrence": {
+            "Frequency": "minute",
+            "interval": "1"
+          }
+        }
+      }
+    }
 
 Since different types of resources have different settings, the contents of this field are left under the control of the resource provider and ARM will never be made aware of these fields. However, in the case of ARM templates, the template execution engine will replace all parameters and expressions \*before\* passing the instantiated object to the RPs.
 
