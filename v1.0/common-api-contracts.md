@@ -3,7 +3,6 @@ This document describes preferred schemas for resource APIs that are to remain c
 
 ## Table of Contents ##
 - [System Metadata for all Azure resources](#system-metadata-for-all-azure-resources ) </br>
-- [Describing location of off-Azure resources](#describing-location-for-off-azure-resources ) </br>
 - [Customer-managed Key encryption](#customer-managed-key-encryption)
 
 ## System Metadata for all Azure resources ##
@@ -71,16 +70,6 @@ In some cases, resources described in ARM are hosted outside of an Azure datacen
   }
 }
 ```
-`locationData` is an optional object property of string fields. Where supported, it should be updatable in both PUT and PATCH methods, and returned on all responses. 
-
-### Properties ###
-| Name  | Description |
-| ------------- | ------------- |
-| name  | a display name for the location  |
-| city  | a name of the location city   |
-| district | the name of a state, province, or other district name   |
-| countryOrRegion | a country or region name for the location. In client experiences, this should not be shortened to "Country." "Country/Region" or "Country or Region"  are appropriate labels. Input values are likely to take one of [these forms](https://en.wikipedia.org/wiki/ISO_3166-1). |
-
 
 ## Customer-managed Key encryption ##
 For resources that implement data encryption and allow the customer to specify the key, the preferred API schema is described below. 
