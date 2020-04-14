@@ -17,12 +17,12 @@ As of 2020, all Azure resources should implement a read-only `systemData` object
   "location": "North US",
   "systemData":{
       "createdBy": "<string>",
-      "createdByType:"<User|Application|ManagedIdentity|Key>",
+      "createdByType": "<User|Application|ManagedIdentity|Key>",
       "createdAt": "<date-time>",
-      "lastModifiedBy":"<string>",
-      "lastModifiedByType":"<User|Application|ManagedIdentity|Key>",
-      "lastModifiedAt":"<date-time>"
-  }
+      "lastModifiedBy": "<string>",
+      "lastModifiedByType": "<User|Application|ManagedIdentity|Key>",
+      "lastModifiedAt": "<date-time>"
+  },
   "tags": {
     "key1": "value 1",
     "key2": "value 2"
