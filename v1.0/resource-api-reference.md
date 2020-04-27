@@ -114,16 +114,16 @@ PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{
        	"sku": {  
           "name": "standard"  
         },
-        "managedBy" : "/subscriptions/{id}/resourceGroups/{group}/providers/{rpns}/{type}/{name}"
-     	  "properties": {  
+        "managedBy" : "/subscriptions/{id}/resourceGroups/{group}/providers/{rpns}/{type}/{name}",
+        "properties": {  
           "quota": {  
             "maxJobCount": "10",  
             "maxRecurrence": {  
               "Frequency": "minute",  
               "interval": "1"  
-              }  
-            }
-    	  }  
+            }  
+          }
+    	}  
      }
 
 Since different types of resources have different settings, the contents of this field are left under the control of the resource provider and ARM will never be made aware of these fields. However, in the case of ARM templates, the template execution engine will replace all parameters and expressions \*before\* passing the instantiated object to the RPs.
