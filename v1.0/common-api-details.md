@@ -142,7 +142,7 @@ Any response greater than 8 MB in size will be dropped by ARM, and **500 Interna
 
 ### Transfer-Encoding ###
 
-Chucked transfer encoding is supported and can be used for larger payloads.
+Chunked transfer encoding is supported and can be used for larger payloads.
 
 ### Redirecting the Client ###
 
