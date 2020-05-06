@@ -114,9 +114,9 @@ PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{
       "sku": {
         "name": "standard"
       },
-      "managedBy" : "/subscriptions/{id}/resourceGroups/{group}/providers/{rpns}/{type}/{name}"
+      "managedBy" : "/subscriptions/{id}/resourceGroups/{group}/providers/{rpns}/{type}/{name}",
       "properties": {
-        "quota": {
+        "quota": { 
           "maxJobCount": "10",
           "maxRecurrence": {
             "Frequency": "minute",
