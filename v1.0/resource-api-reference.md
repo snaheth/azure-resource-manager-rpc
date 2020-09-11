@@ -98,6 +98,10 @@ The "sku" property is a complex type because it allows differentiation based on 
 The Plan entity **MUST** be used for establishing the purchase context of any 3rd Party Artifact that is made available through the Azure Data Market. These artifacts can be 3rd Party Extension Resources like MySql Databases or an artifacts used in first party resources like images deployed in Azure Virtual Machines. Additionally, the plan entity can be used for procuring 1st
 party artifacts which incur usage/billing in addition to the cost of the service (e.g. VMs running SQL/BizTalk/etc).
 
+
+#### Resource Provider and Type Names best-practices ####
+While we do not have any stringent naming conventions there are reserved words for platform constructs such as deployments, location, region, availability, provider, application, resource, graph, policy, migrate, templates, catalog, gallery, and portal which cannot be used. The API review board is also required to review and sign off on all names to help avoid service name confusion of existing and upcoming services. We also recommend all names following the [Microsoft wide API guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/Guidelines.md#17-naming-guidelines) on naming and also have your names reviewed with the [naming consul](https://microsoft.sharepoint.com/sites/globalreadiness/SitePages/NewNameReview.aspx) if your service is going to be a public service.
+
 ##### Resource Request Properties Envelope #####
 
 Every resource can have a section with properties. These are the settings that describe or configure the resource. For example, the configuration for a job collection can be seen below:
