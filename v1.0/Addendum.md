@@ -234,8 +234,7 @@ The operation resource format returned by the Azure-AsyncOperation header is as 
             returned on a successful operation (status being "Succeeded"). \*/
       },
       "error" : {
-        /\* This is the OData v4 format, used by the RPC and will go into the
-            v2.2 Azure REST API guidelines \*/
+        /\* RP must return the *code* and *messages* fields. Please use the schema for the "ErrorResponse" Type from the Common Types definition in the Azure Rest API Specifications [repository](https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/resource-management/v2/types.json) \*/
         "code": "BadArgument",
         "message": "The provided database &#39;foo&#39; has an invalid username."
       }
