@@ -18,7 +18,6 @@ The resource provider proxy will preserve all the client requests headers, with 
 | :----------------------------| :------------------------| :-----------------------------------|
 | referer | Always added. Set to the full URI that the client connected to (which will be different than the RP URI, since it will have the public hostname instead of the RP hostname). This value can be used in generating FQDN for Location headers or other requests since RPs should not reference their endpoint name. |  1st and 3rd party |
 | authorization | Always removed/changed. The authorization used by the client to the proxy will be different than the authorization used to communicate from the proxy to the resource provider. | 1st and 3rd party |
-| x-ms-correlation-request-id | Always added. Specifies the tracing correlation Id for the request; the resource provider \*must\* log this so that end-to-end requests can be correlated across Azure. | 1st and 3rd party | 
 | x-ms-client-ip-address | Always added . Set to the client IP address used in the request; this is required since the resource provider will not have access to the client IP. | 1st and 3rd party |
 | x-ms-client-principal-name | Always added. Set to the principal name / UPN of the client JWT making the request. | 1st party only |
 | x-ms-client-principal-id | Added when available. Set to the principal Id of the client JWT making the request. Service principal will not have the principal Id. | 1st party only |
@@ -36,13 +35,14 @@ The resource provider proxy will preserve all the client requests headers, with 
 
 ## Client Request Headers ##
 
-Any non-reserved headers provided by the client will pass as-is to the resource provider. All requests to resource providers may include the following standard headers and \*must\* be supported:
+Any non-reserved headers provided by the client will pass as-is to the resource provider. All requests to resource providers may include the following standard headers and **must** be supported:
 
 | Header | Description |
 | --- | --- |
 | Content-Type | Set to application/json. This header is not sent in requests that don&#39;t have any content, such as all GET calls. |
 | Accept-Language | Specifies the preferred language for the response; all RPs should use this header when generating error messages or client facing text. |
-| x-ms-client-request-id | Caller-specified value identifying the request, in the form of a GUID with no decoration such as curly braces (e.g. client-request-id: 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0). If the caller provides this header – the resource provider \*must\* log this with their traces to facilitate tracing a single request.If specified, this will be included in response information as a way to map the request if "x-ms-return-client-request-id"; is specified as "true". |
+| x-ms-client-request-id | Caller-specified value identifying the request, in the form of a GUID with no decoration such as curly braces (e.g. `client-request-id: 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0`). If the caller provides this header – the resource provider **must** log this with their traces to facilitate tracing a single request. If specified, this will be included in response information as a way to map the request if "x-ms-return-client-request-id"; is specified as "true". Because this header can be client-generated, it should not be assumed to be unique by the RP implementation. |
+| x-ms-correlation-request-id | Optional. Caller-specified value identifying a set of related operations that the request belongs to, in the form of a GUID. If the caller does not specify this header, ARM will randomly generate a unique GUID. Used for tracing the correlation Id of the request; the resource provider **must** log this so that end-to-end requests can be correlated across Azure. Because this header can be client-generated, it should not be assumed to be unique by the RP implementation. |
 | x-ms-return-client-request-id | Optional. True or false and indicates if a client-request-id should be included in the response. Default is false. |
 
 ## Request Query Parameters ##
