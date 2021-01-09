@@ -48,10 +48,9 @@ ARM will provide the values in the `x-ms-arm-resource-system-data` header to the
 ### Resource move ###
 Resource move is treated as a combination of creation and deletion. ARM passes one single x-ms-arm-resource-system-data header for the complete move operation. For example, if you have 20 resources to be moved in one request, the expectation from RPs is to save the same system data for each of these 20 resources. In this example,  moving 20 resources is equal to creating 20 resources, and therefore, the systemData values are the same.   
 
-### GDPR Variant Catgeory: Incident Response & Investigations ###
-For GDPR, systemData is classified as Incident Response & Investigations data. The data should be tagged with this variant tag, and it will be ignored if someone asks to be forgotten. There are no retention limits; however, the variant tag should be applied to the data as it is being stored.
-
-Data in this asset should only contain End User Identifiable Information, End  User Pseudonymous Identifiers, Customer Account Data, Public Personal data with sufficient privacy tags AND can contain Customer Content Information AND no other GDPR/personal data. Assets can be Azure tenant resource names, End-User IP Addresses, Azure Subscription IDs, and the resource metadata, including any internal Microsoft domain names/machine names or IDs.
+### FAQ ###
+#### Is it OK to collect this data in Microsoft telemetry streams (e.g., Geneva, Kusto, COSMOS, etc.)? ####
+A: **No.** This data is considered Customer Data [Customer Content and End User Identifiable Information (EUII)] and must **NOT** be collected in any telemetry streams in order to meet our data handling requirements. It should only be included in the activity log for and accessible by each individual customer.
 
 | Eligible DSR Variant | Asset Tag in Data Studio |
 | ------------- | ------------- |
