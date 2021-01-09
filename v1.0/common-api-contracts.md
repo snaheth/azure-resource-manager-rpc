@@ -50,7 +50,7 @@ Resource move is treated as a combination of creation and deletion. ARM passes o
 
 ### FAQ ###
 #### Is it OK to collect this data in Microsoft telemetry streams (e.g., Geneva, Kusto, COSMOS, etc.)? ####
-A: **No.** This data is considered Customer Data [Customer Content and End User Identifiable Information (EUII)] and must **NOT** be collected in any telemetry streams in order to meet our data handling requirements. It should only be included in the activity log for and accessible by each individual customer.
+**No.** This data is considered Customer Data [Customer Content and End User Identifiable Information (EUII)] and must **NOT** be collected in any telemetry streams in order to meet our data handling requirements. It should only be included in the activity log for and accessible by each individual customer.
 
 | Eligible DSR Variant | Asset Tag in Data Studio |
 | ------------- | ------------- |
