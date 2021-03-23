@@ -115,11 +115,11 @@ Some REST operations can take a long time to complete. Although REST is not supp
 
 The API flow for PUT should be to:
 
-1. Respond to the initial PUT request with a 201 Created or 200 OK (per normal guidance)
-2. Since provisioning is not complete, the PUT response body **MUST** contain a provisioningState set to a non-terminal value (e.g. &quot;Accepted&quot;, or &quot;Created&quot;)
+1. Respond to the initial PUT request with a 201 Created or 200 OK (per normal guidance).
+2. Since provisioning is not complete, the PUT response body **MUST** contain a provisioningState set to a non-terminal value (e.g. &quot;Accepted&quot;, or &quot;Created&quot;). Resource properties should reflect the update that is in progress (i.e. the state the resource will be in once the async operation is complete).
 3. **Optional** : The response headers may include a Azure-AsyncOperation header pointing to an Operation resource (as described below)
-4. Future GETs on the resource that was created should continue to return a 200 Status Code and provisioningState field that is \*non-terminal\* as long as the provisioning is in progress
-5. After the provisioning completes, the provisioningState field should transition to one of the terminal states (as described below).
+4. Future GETs on the resource that was created should continue to return a 200 Status Code and provisioningState field that is \*non-terminal\* as long as the provisioning is in progress. 
+5. After the provisioning completes, the provisioningState field should transition to one of the terminal states (as described below). If an update to existing resource properties failed then those properties can be reverted to their previous state if that best represents the end state of the resource after the failed operation.
 6. The provisioningState field should be returned on all future GETs, even after it is complete, until some other operation (e.g. a DELETE or UPDATE) causes it to transition to a non-terminal state.
 
 ### Updating using PATCH ###
