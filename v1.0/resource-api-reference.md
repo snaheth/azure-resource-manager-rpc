@@ -188,7 +188,7 @@ Of note, just like for PUT resource, a user can \*not\* change the location, typ
 
 An example of a common pattern is to PATCH an update to the Tags section of a resource. The behavior for a PATCH of the tags property is to replace all tags with the provided tag keys and values. As an example: if the resource currently has tag1 and tag2, and a PATCH request sends tag3, the final resource should have tag3 (and \*not\* tag1, tag2 and tag3).
 
-The behavior for patching of the fields inside the properties envelope is left to the resource provider, although it should follow the Azure REST guidelines.
+The behavior for patching of the fields inside the properties envelope should follow JSON merge-patch ([RFC 7396](https://tools.ietf.org/html/rfc7396)).
 
 #### Response ####
 
