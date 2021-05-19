@@ -42,11 +42,11 @@ This API uses the &quot;system&quot; version of 2.0 because it can be triggered 
 			"zoneMappings": [
 				{
 					"logicalZone": "1",
-					"physcialZone": "2"
+					"physicalZone": "2"
 				},
 				{
 					"logicalZone": "2",
-					"physcialZone": "1"
+					"physicalZone": "1"
 				}
 			]
 		},
