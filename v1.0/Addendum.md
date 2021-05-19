@@ -211,10 +211,10 @@ After this maximum time, clients will give up and treat the operation as timed o
 | Clients | Resource Provider |
 | --- | --- |
 | DELETE /…/resourcegroups/rg1 |   |
-|   | 202 AcceptedLocation: /…/resourcegroups/rg1/operationresults/id1 Retry-After: 60 |
+|   | 202 Accepted <br/> Location: /…/resourcegroups/rg1/operationresults/id1 <br/> Retry-After: 60 |
 | Waits 60 seconds |   |
 | GET /…/resourcegroups/rg1/ operationresults/id1  |   |
-|   | HTTP/1.1 202 AcceptedLocation: /…/resourcegroups/rg1/operationresults/id1 Retry-After: 10 |
+|   | 202 Accepted <br/> Location: /…/resourcegroups/rg1/operationresults/id1 <br/> Retry-After: 10 |
 | Waits 10 seconds |   |
 | GET /…/resourcegroups/rg1/ operationresults/id1 |     |
 |   | 204 NOCONTENT |
