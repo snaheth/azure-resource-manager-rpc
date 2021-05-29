@@ -137,7 +137,7 @@ For resources that implement data encryption and allow the customer to specify t
             "enabled": {
                 "type": bool,
                 "metadata": {
-"description": "(Optional) Discouraged to include in resource definition. Only needed where it is possible to disable all encryption for a resource (including non-CMK platform encryption). Azure SQL TDE is an example of this.”
+"description": "(Optional) Discouraged to include in resource definition. Only needed where it is possible to disable platform (AKA infrastructure) encryption. Azure SQL TDE is an example of this.”
                 }
             }
             "cmkEncryption": {
@@ -191,7 +191,7 @@ For resources that implement data encryption and allow the customer to specify t
 ### Properties ###
 | Name  | Description |
 | ------------- | ------------- |
-| enabled  | It is preferred to make encryption mandatory, but if included this enables or disables encryption. |
+| enabled  | It is preferred to make infrastructure or platform encryption mandatory, but if included this enables or disables infrastructure or platform encryption. |
 | cmkEncryption.kekUrl  | Key vault uri to access the encryption key  |
 | cmkEncryption.kekVaultResourceId  | Key vault resource id to access the key vault  |
 | cmkEncryption.kekIdentity.useSystemAssignedIdentity | bool. If true, will use the system assigned for CMK operations. Mutually exclusive with userAssignedIdentity  |
@@ -201,7 +201,7 @@ On PUT/PATCH of a new key, the provider is expected to implement key rotation fo
 
 Error cases:
 -	useSystemAssignedIdentity == TRUE and userAssignedIdentity != NULL
--	enabled == FALSE and properties are specified in CMK 
+-	enabled == FALSE and properties are specified in CMK as infrastructure encryption is needed to support CMK.
 
 ### State Change Table ###
 The following sample ARM Manifests depicts the expected state changes and service behavior.
