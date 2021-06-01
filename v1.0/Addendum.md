@@ -12,7 +12,7 @@
 - [Call Action POST Asynchronously](#call-action-post-asynchronously)
 - [ProvisioningState property](#provisioningstate-property)
 - [202 Accepted and Location Headers](#202-accepted-and-location-headers)
-- [Operation Resource format](#operation-resource-format)
+- [Azure-AsyncOperation Resource format](#azure-asyncoperation-resource-format)
 - [Retrying REST Calls](#retrying-rest-calls)
 - [Designing Resources](#designing-resources)
 - [Enumerating SKUs for an existing resource](#enumerating-skus-for-an-existing-resource)
@@ -219,7 +219,7 @@ After this maximum time, clients will give up and treat the operation as timed o
 | GET /…/resourcegroups/rg1/ operationresults/id1 |     |
 |   | 204 NOCONTENT |
 
-## Operation Resource format ##
+## Azure-AsyncOperation Resource format ##
 The operation resource format returned by the Azure-AsyncOperation header is as follows-
 
     {
