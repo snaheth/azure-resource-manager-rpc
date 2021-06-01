@@ -173,13 +173,6 @@ For resources that implement data encryption and allow the customer to specify t
                         "metadata": {
 "description": "key encryption key Url, versioned or unversioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek"
                         }
-                    },
-                    "kekVaultResourceID": {
-                        "type": "string",
-                        "defaultValue": "",
-                        "metadata": {
-"description": "key encryption key vault resource id. Ex: /subscriptions/subscriptionid/resourceGroups/contosorg/providers/Microsoft.KeyVault/vaults/contosovault"
-                        }
                     }
                 }
             }
