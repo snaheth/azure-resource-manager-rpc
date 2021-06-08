@@ -265,7 +265,7 @@ Empty
 
 ### Get Resource ###
 
-Returns a resource belonging to a resource group. Resource types can be nested and, if so, must follow the REST guidelines (full details in the nested resource type section). Below are the three different request URIs to get resource or resource collection under a resource group or subscription. 
+Returns a resource belonging to a resource group. Resource types can be nested and, if so, must follow the REST guidelines (full details in [the nested resource type section](https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#nested-resources)). Below are the three different request URIs to get resource or resource collection under a resource group or subscription. 
 
 #### Request - Get a specific resource under resource group ####
 
