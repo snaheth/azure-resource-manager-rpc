@@ -106,7 +106,7 @@ Some REST operations can take a long time to complete. Although REST is not supp
 
 **Please note:**
 
-    * Retry-After should be (integer), will not support http-date
+    * Retry-After should be (integer), will not support http-date.
     * Location header should be absolute URI (partial URI is not supported). 
     * Azure-AsyncOperation header should be absolute URI (partial URI is not supported).
     * Location URI should return 202 Accepted while operation is in progress.
@@ -122,12 +122,12 @@ The API flow for PUT should be to:
 2. Since provisioning is not complete, the PUT response body **MUST** contain a provisioningState property set to a non-terminal value (as described [below](#provisioningstate-property)). Resource properties should reflect the update that is in progress (i.e. the state the resource will be in once the async operation is complete).
 3. **Optional** : The response headers may include a Azure-AsyncOperation header pointing to an Operation resource (as described [below](#azure-asyncoperation-resource-format)).
 4. Future GETs on the resource that was created should continue to return a 200 Status Code and provisioningState field that is \*non-terminal\* as long as the provisioning is in progress. 
-5. After the provisioning completes, the provisioningState field should transition to one of the terminal states (as described [below](#provisioningstate-property)). If an update to existing resource properties failed then those properties should be reverted to their previous state if that best represents the end state of the resource after the failed operation.
+5. After the provisioning completes, the provisioningState field should transition to one of the terminal states. If an update to existing resource properties failed then those properties should be reverted to their previous state if that best represents the end state of the resource after the failed operation.
 6. The provisioningState field should be returned on all future GETs, even after it is complete, until some other operation (e.g. a DELETE or UPDATE) causes it to transition to a non-terminal state.
 
-**Note:**
+<br/>
 
-    You may have noticed some of the resource provider's existing PUT APIs return 202 Accepted. Please note this is a old model. For PUT requests, 201 / 200 + ProvisioningState is the preferred model. For more details, refer Microsoft API guidelines on [long running operations](https://github.com/microsoft/api-guidelines/blob/vNext/Guidelines.md#131-resource-based-long-running-operations-relo).
+  Some of the resource provider's existing PUT APIs return 202 Accepted. Please note this is a old model. For PUT requests, 201 / 200 + ProvisioningState is the preferred model. For more details, refer Microsoft API guidelines on [long running operations](https://github.com/microsoft/api-guidelines/blob/vNext/Guidelines.md#131-resource-based-long-running-operations-relo).
 
 
 ### Updating using PATCH ###
@@ -156,7 +156,7 @@ The API flow for POST {resourceUrl}/{action} should be:
 
 1. Respond to the initial POST request with a 202 Accepted
 2. The response headers **MUST** include a Location header that points to a URL where the ongoing operation can be monitored (as described [below](#202-accepted-and-location-headers)).
-3. **Optional:** The response headers may include an Azure-AsyncOperation header pointing to an Operation resource (as described below).
+3. **Optional:** The response headers may include an Azure-AsyncOperation header pointing to an Operation resource (as described [below](#azure-asyncoperation-resource-format)).
 4. If the POST completes successfully, the URL that was returned in the Location header **MUST** now return what would have been a successful response if the API completed (e.g. a response body / header / status code). It is acceptable for this to be a 200/204 NoContent if the action does not require a response (e.g. restarting a VM).
 
 ## ProvisioningState property ##
@@ -208,23 +208,25 @@ The asynchronous operation APIs frequently use the 202 Accepted status code and 
 The Uri for the Location header can be either underneath a subscription level operations URL:
 
 Examples:
-https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/providers/{namespace}/locations/westus/operationResults/{operationId}?api-version={api-version}
+https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/providers/{namespace}/locations/westus/operationResults/{operationId}?api-version={api-version} <br/>
+
 https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/providers/{namespace}/operationResults/{operationId}?api-version={api-version}
 
 or underneath the resource on which operation invoked:
 
 Examples:
-https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/providers/{namespace}/{resourceType}/{resourceName}/operationResults/{operationId}?api-version={api-version}
+https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/providers/{namespace}/{resourceType}/{resourceName}/operationResults/{operationId}?api-version={api-version} <br/>
+
 https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/providers/{namespace}/{resourceType}/{resourceName}/{childResourceType}/{childResourceName}/operationResults/{operationId}?api-version={api-version}
 
 The _endpoint_ can be determined by the hostname of the URI in the _referer_ header.
 
-Location URI under subscription scope is preferred. For long running operations like delete, if operationResults is exposed under resource scope, then operationResults resource will not be accessible when the resource gets deleted.
+Location URI under subscription scope is preferred. If operationResults is exposed under resource scope, then for long running operations like delete, operationResults resource will not be accessible when the resource gets deleted.
 
 ### Example flow ###
 | Clients | Resource Provider |
 | --- | --- |
-| DELETE /…/subscriptions/sub1/resourceGroups/rg1/providers/Microsoft.Test/tests/test1 |   |
+| DELETE /…/subscriptions/sub1/providers/Microsoft.Test/tests/test1 |   |
 |   | 202 Accepted <br/> Location: /…/subscriptions/sub1/providers/Microsoft.Test/operationResults/id1 <br/> Retry-After: 60 |
 | Waits 60 seconds |   |
 | GET /…/subscriptions/sub1/providers/Microsoft.Test/operationResults/id1  |   |
