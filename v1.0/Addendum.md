@@ -121,9 +121,9 @@ The API flow for PUT should be to:
 1. Respond to the initial PUT request with a 201 Created or 200 OK (per normal guidance).
 2. Since provisioning is not complete, the PUT response body **MUST** contain a provisioningState property set to a non-terminal value (as described [below](#provisioningstate-property)). Resource properties should reflect the update that is in progress (i.e. the state the resource will be in once the async operation is complete).
 3. **Optional** : The response headers may include a Azure-AsyncOperation header pointing to an Operation resource (as described [below](#azure-asyncoperation-resource-format)).
-4. Future GETs on the resource that was created should continue to return a 200 Status Code and provisioningState field that is \*non-terminal\* as long as the provisioning is in progress. 
-5. After the provisioning completes, the provisioningState field should transition to one of the terminal states. If an update to existing resource properties failed then those properties should be reverted to their previous state if that best represents the end state of the resource after the failed operation.
-6. The provisioningState field should be returned on all future GETs, even after it is complete, until some other operation (e.g. a DELETE or UPDATE) causes it to transition to a non-terminal state.
+4. Future GETs on the resource that was created should continue to return a 200 Status Code and provisioningState property that is \*non-terminal\* as long as the provisioning is in progress. 
+5. After the provisioning completes, the provisioningState property should transition to one of the terminal states. If an update to existing resource properties failed then those properties should be reverted to their previous state if that best represents the end state of the resource after the failed operation.
+6. The provisioningState property should be returned on all future GETs, even after it is complete, until some other operation (e.g. a DELETE or UPDATE) causes it to transition to a non-terminal state.
 
 <br/>
 
@@ -137,7 +137,7 @@ The API flow for PATCH on an existing resource should be to:
 1. Respond to the initial PATCH request with a 202 Accepted
 2. The response headers **MUST** include a Location header that points to a URL where the ongoing operation can be monitored (as described [below](#202-accepted-and-location-headers)).
 3. **Optional:** The response headers may include an Azure-AsyncOperation header pointing to an Operation resource (as described [below](#azure-asyncoperation-resource-format)).
-4. If a provisioningState field is used for the resource, it **MUST** transition to a non-terminal state like &quot;Updating&quot;
+4. If a provisioningState property is used for the resource, it **MUST** transition to a non-terminal state like &quot;Updating&quot;
 5. If the PATCH completes successfully, the URL that was returned in the Location header **MUST** now return what would have been a successful response if the API completed (e.g. a response body / header / status code).
 
 ## Delete Resource Asynchronously ##
@@ -147,7 +147,7 @@ The API flow should be to:
 1. Respond to the initial DELETE request with a 202 Accepted
 2. The response headers **MUST** include a Location header that points to a URL where the ongoing operation can be monitored (as described [below](#202-accepted-and-location-headers)).
 3. **Optional:** The response headers may include an Azure-AsyncOperation header pointing to an Operation resource (as described [below](#azure-asyncoperation-resource-format)).
-4. If a provisioningState field is used for the resource, it **MUST** transition to a non-terminal state like &quot;Deleting&quot;
+4. If a provisioningState property is used for the resource, it **MUST** transition to a non-terminal state like &quot;Deleting&quot;
 5. If the DELETE completes successfully, the URL that was returned in the Location header **MUST** now return a 200 OK or 204 NoContent to indicate success and the resource **MUST** disappear.
 
 ## Call Action POST Asynchronously ##
@@ -161,7 +161,7 @@ The API flow for POST {resourceUrl}/{action} should be:
 
 ## ProvisioningState property ##
 
-The provisioningState field has three terminal states: **Succeeded** , **Failed** and **Canceled**. If the resource returns no provisioningState, it is assumed to be **Succeeded**.
+The provisioningState property has three terminal states: **Succeeded** , **Failed** and **Canceled**. If the resource returns no provisioningState, it is assumed to be **Succeeded**.
 
 Each individual RP is able to define their own non-terminal / transitioning / ephemeral states that are set before the resource reaches terminal states (e.g. "PreparingVMDisk", "MountingDrives", "SelectingHosts" etc.).
 
@@ -212,7 +212,7 @@ https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/providers/{namespace}/lo
 
 https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/providers/{namespace}/operationResults/{operationId}?api-version={api-version}
 
-or underneath the resource on which operation invoked:
+or underneath the resource on which the operation was invoked:
 
 Examples:
 https://&lt;endpoint&gt;/subscriptions/{subscriptionId}/providers/{namespace}/{resourceType}/{resourceName}/operationResults/{operationId}?api-version={api-version} <br/>
