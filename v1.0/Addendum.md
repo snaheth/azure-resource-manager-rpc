@@ -109,8 +109,8 @@ Some REST operations can take a long time to complete. Although REST is not supp
     * Retry-After should be (integer), will not support http-date.
     * Location header should be absolute URI (partial URI is not supported). 
     * Azure-AsyncOperation header should be absolute URI (partial URI is not supported).
-    * Location URI should return 202 Accepted while operation is in progress.
-    * Azure-AsyncOperation URI returns 200 and status of the operation is present in the response payload.
+    * Location URI should return 202 Accepted with no response body while operation is in progress.
+    * Azure-AsyncOperation URI returns 200 and status of the operation is present in the response payload. The response should match the RPC contract.
 
 ## Creating or Updating Resources Asynchronously ##
 
@@ -161,9 +161,9 @@ The API flow for POST {resourceUrl}/{action} should be:
 
 ## ProvisioningState property ##
 
-The provisioningState property has three terminal states: **Succeeded** , **Failed** and **Canceled**. If the resource returns no provisioningState, it is assumed to be **Succeeded**.
+The provisioningState property has only three terminal states: **Succeeded** , **Failed** and **Canceled**. If the resource returns no provisioningState, it is assumed to be **Succeeded**.
 
-Each individual RP is able to define their own non-terminal / transitioning / ephemeral states that are set before the resource reaches terminal states (e.g. "PreparingVMDisk", "MountingDrives", "SelectingHosts" etc.).
+Any state other than above three terminal states is a non-terminal state (e.g. "PreparingVMDisk", "MountingDrives", "SelectingHosts", "Deleted", "Accepted" etc.). Each individual RP is able to define their own non-terminal / transitioning / ephemeral states that are set before the resource reaches terminal states.
 
 The basic functionality of the template orchestration engine and other clients is to:
 
@@ -197,7 +197,11 @@ If the user provides a provisioningState matching the value \*on the server\*, t
 
 The asynchronous operation APIs frequently use the 202 Accepted status code and Location headers to indicate progress. The flow is described below:
 
-1. Return HTTP code 202 (Accepted) with a Location header and, optionally, a Retry-After header. The URI in the location header should be a full absolute URI. The time interval in the Retry-After header can only be specified in seconds, with a minimum of 10 seconds and a maximum of 10 minutes.
+1. Return HTTP code 202 (Accepted) with a Location header and, optionally, a Retry-After header. 
+    - The 202 Accepted should return no response body.
+    - The URI in the location header should be a full absolute URI and a public facing URI.
+    - The URI host must be the same as the host in the referrer header. 
+    - The time interval in the Retry-After header can only be specified in seconds, with a minimum of 10 seconds and a maximum of 10 minutes.
 2. Clients invoke the URI specified in the Location header using the GET verb.
 3. Clients should wait for the Retry-After interval, if it was specified, or the default of 60 seconds if it was not, before polling again.
 4. If the operation is not complete, return 202 (Accepted) again with Location header and optionally an updated Retry-After header.
