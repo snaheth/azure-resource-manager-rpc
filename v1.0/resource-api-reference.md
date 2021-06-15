@@ -148,7 +148,7 @@ The response includes an HTTP status code, a set of response headers, and a resp
 
 The resource provider should return 200 (OK) or 201 (Created) to indicate that the operation completed successfully synchronously.
 
-If the create request cannot be fulfilled quickly, the RP should return and follow the [_Asynchronous Operations_ addendum](Addendum.md#asynchronous-operations). The resource provider can return 202 (Accepted) in these cases, but 201 + provisioningState is generally preferred.
+If the create request cannot be fulfilled quickly, then RP should follow [_Asynchronous Operations_ pattern ](async-api-reference.md#asynchronous-operations).
 
 If the subscription or the resource group does not exist, 404 (NotFound) should be returned.
 
@@ -196,7 +196,7 @@ The response includes an HTTP status code, a set of response headers, and a resp
 
 **Status Code**
 
-The resource provider should return 200 (OK) to indicate that the operation completed successfully. 202 (Accepted) can be returned to indicate that the operation will complete [asynchronously](Addendum.md#asynchronous-operations).
+The resource provider should return 200 (OK) to indicate that the operation completed successfully. 202 (Accepted) can be returned to indicate that the operation will complete [asynchronously](api-async-reference.md#asynchronous-operations).
 
 If the resource group \*or\* resource does not exist, 404 (NotFound) should be returned.
 
@@ -251,7 +251,7 @@ The response includes an HTTP status code, a set of response headers, and a resp
 
 The resource provider can return 200 (OK) or 204 (NoContent) to indicate that the operation completed successfully. A 200 (OK) should be returned if the object exists and was deleted successfully; and a 204 (NoContent) should be used if the resource does not exist and the request is well formed.
 
-202 (Accepted) can be returned to indicate that the operation will complete [asynchronously](Addendum.md#asynchronous-operations).
+202 (Accepted) can be returned to indicate that the operation will complete [asynchronously](async-api-reference.md#asynchronous-operations).
 
 If the resource group does not exist, 404 (NotFound) will be returned by the proxy layer and will not reach the resource provider. 412 (PreconditionFailed) and other normal REST codes are acceptable as long as they match the REST guidelines.
 
@@ -347,7 +347,7 @@ For a detailed explanation of each field in the response body, please refer to t
 | id | Required, stringThe id field should be the URL (excluding the hostname/scheme and api version) for the entity. It should not be URL encoded. E.g. /subscriptions/{id}/resourceGroups/{rgName}/providers/{rpns}/{typeName}/{name} This field is important to the platform – it is used as the identifier for references on other objects (e.g. if a virtual machine &quot;points&quot; to a vNet, it uses the id of the vNet as its reference), displaying links / references between resources in the portal, Authorization checks / validation, auditing / operational logs, etc. |
 | name | Required, stringThe name does not need to be URL encoded or match exactly what is seen in the URL. It should be the name of the resource and is not expected to be globally unique (only unique for that particular collection / type in the resource group). |
 | type | Required, stringThe type does not need to be URL encoded or match exactly what is seen in the URL.  It should include the resource provider namespace \*and\* the type of the entity. Examples include Microsoft.Web/Sites. |
-| etag | Optional, stringThe Etag field is \*not\* required. If it is provided in the response body, it must also be provided as a header per [the normal ETag convention](http://www.rfc-editor.org/rfc/rfc2616.txt).  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the ETag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. The full guidance can be found in the Addendum. |
+| etag | Optional, stringThe Etag field is \*not\* required. If it is provided in the response body, it must also be provided as a header per [the normal ETag convention](http://www.rfc-editor.org/rfc/rfc2616.txt).  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the ETag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. The full guidance can be found in the [Addendum](Addendum.md#etags-for-resources). |
 | kind | Optional.  String.Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. |
 
 **Paging Response Body**
@@ -459,7 +459,7 @@ ARM will perform some basic validation before forwarding the request to the reso
 
 If the request reaches the resource provider, it should return 200 (OK) to indicate that the operation completed successfully.
 
-202 (Accepted) can be returned to indicate that the operation will [complete asynchronously](Addendum.md#asynchronous-operations).
+202 (Accepted) can be returned to indicate that the operation will [complete asynchronously](async-api-reference.md#asynchronous-operations).
 
 If the resource group \*or\* resource does not exist, 404 (NotFound) should be returned. A 400 (BadRequest) can be used if the request does not satisfy the RP specific requirements.
 
