@@ -140,13 +140,13 @@ For resources that implement data encryption and allow the customer to specify t
 "description": "(Optional) Discouraged to include in resource definition. Only needed where it is possible to disable platform (AKA infrastructure) encryption. Azure SQL TDE is an example of this.”
                 }
             }
-            "cmkEncryption": {
+            "CmkEncryption": {
                 "type": "object",
                 "metadata": {
 "description":"All CMK (customer managed keys) encryption properties for the resource."
                 },
                 "subProperties": {
-                    "kekIdentity": {
+                    "KekIdentity": {
                         "type": "object",
                         "metadata": {
 "description":"All identity configuration for CMK defining which identity should be used to auth to Key Vault."
@@ -167,7 +167,7 @@ For resources that implement data encryption and allow the customer to specify t
                             }
                         }
                     },
-                    "kekUrl": {
+                    "KekUrl": {
                         "type": "string",
                         "defaultValue": "",
                         "metadata": {
@@ -185,16 +185,16 @@ For resources that implement data encryption and allow the customer to specify t
 | Name  | Description |
 | ------------- | ------------- |
 | enabled  | It is preferred to make infrastructure or platform encryption mandatory, but if included this enables or disables infrastructure or platform encryption. |
-| cmkEncryption.kekUrl  | Key vault uri to access the encryption key  |
-| cmkEncryption.kekVaultResourceId  | Key vault resource id to access the key vault  |
-| cmkEncryption.kekIdentity.useSystemAssignedIdentity | bool. If true, will use the system assigned for CMK operations. Mutually exclusive with userAssignedIdentity  |
-| cmkEncryption.kekIdentity.userAssignedIdentity | The the User Assigned resource id of the identity which will be used to access key vault  |
+| CmkEncryption.KekUrl  | Key vault uri to access the encryption key  |
+| CmkEncryption.KekVaultResourceId  | Key vault resource id to access the key vault  |
+| CmkEncryption.KekIdentity.useSystemAssignedIdentity | bool. If true, will use the system assigned for CMK operations. Mutually exclusive with userAssignedIdentity  |
+| CmkEncryption.KekIdentity.userAssignedIdentity | The the User Assigned resource id of the identity which will be used to access key vault  |
 
 On PUT/PATCH of a new key, the provider is expected to implement key rotation for the encrypted data. 
 
 Error cases:
 -	useSystemAssignedIdentity == TRUE and userAssignedIdentity != NULL
--	enabled == FALSE and properties are specified in CMK as infrastructure encryption is needed to support CMK.
+-	enabled == FALSE but KekUrl is set as infrastructure encryption is needed to support CMK.
 
 ### State Change Table ###
 The following sample ARM Manifests depicts the expected state changes and service behavior.
@@ -203,8 +203,8 @@ The following sample ARM Manifests depicts the expected state changes and servic
 ```
 {
     "encryption": {
-        "cmkEncryption": {
-            "kekIdentity": {
+        "CmkEncryption": {
+            "KekIdentity": {
                 "useSystemAssignedIdentity": false,
                 "userAssignedIdentity": "UA resource id"
             }
@@ -217,8 +217,8 @@ The following sample ARM Manifests depicts the expected state changes and servic
 ```
 {
     "encryption": {
-        "cmkEncryption": {
-            "kekIdentity": {
+        "CmkEncryption": {
+            "KekIdentity": {
                 "useSystemAssignedIdentity": true,
                 "userAssignedIdentity": null
             }
@@ -231,8 +231,8 @@ The following sample ARM Manifests depicts the expected state changes and servic
 ```
 {
     "encryption": {
-        "cmkEncryption": {
-            "kekIdentity": {
+        "CmkEncryption": {
+            "KekIdentity": {
                 "useSystemAssignedIdentity": false,
                 "userAssignedIdentity": null
             }
