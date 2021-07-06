@@ -197,7 +197,7 @@ Error cases:
 -	enabled == FALSE but KekUrl is set as infrastructure encryption is needed to support CMK.
 
 ### State Change Table ###
-The following sample ARM Manifests depicts the expected state changes and service behavior.
+The following sample ARM requests depict the expected state changes and service behavior.
 
 #### Partial Patch – Service-Assigned to User-Assigned Managed Identity ####
 ```
