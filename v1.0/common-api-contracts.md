@@ -134,10 +134,10 @@ For resources that implement data encryption and allow the customer to specify t
             "description": "All encryption configuration for a resource."
         },
         "subProperties": {
-            "enabled": {
-                "type": bool,
+            "infrastructureEncryption": {
+                "type": string numb,
                 "metadata": {
-"description": "(Optional) Discouraged to include in resource definition. Only needed where it is possible to disable platform (AKA infrastructure) encryption. Azure SQL TDE is an example of this.”
+"description": "(Optional) Discouraged to include in resource definition. Only needed where it is possible to disable platform (AKA infrastructure) encryption. Azure SQL TDE is an example of this. Values are enabled and disabled.”
                 }
             }
             "customerManagedKeyEncryption": {
@@ -184,16 +184,16 @@ For resources that implement data encryption and allow the customer to specify t
 ### Properties ###
 | Name  | Description |
 | ------------- | ------------- |
-| enabled  | It is preferred to make infrastructure or platform encryption mandatory, but if included this enables or disables infrastructure or platform encryption. |
+| infrastructureEncryption  | String enum with values of enabled and disabled. It is preferred to make infrastructure or platform encryption mandatory, but if included this enables or disables infrastructure or platform encryption. |
 | customerManagedKeyEncryption.keyEncryptionKeyUrl  | Key vault uri to access the encryption key  |
-| customerManagedKeyEncryption.keyEncryptionKeyIdentity.identityType | string enum. userAssignedIdentity or systemAssignedIdentity  |
+| customerManagedKeyEncryption.keyEncryptionKeyIdentity.identityType | String enum. Values are userAssignedIdentity or systemAssignedIdentity  |
 | customerManagedKeyEncryption.keyEncryptionKeyIdentity.userAssignedIdentity | The the User Assigned resource id of the identity which will be used to access key vault  |
 
 On PUT/PATCH of a new key, the provider is expected to implement key rotation for the encrypted data. 
 
 Error cases:
 -	identityType == "systemAssignedIdentity" and userAssignedIdentity != NULL
--	enabled == FALSE but keyEncryptionKeyUrl is set. Infrastructure encryption is needed to support CMK.
+-	infrastructureEncryption == enabled but keyEncryptionKeyUrl is set. Infrastructure encryption is needed to support CMK.
 
 ### State Change Table ###
 The following sample ARM requests depict the expected state changes and service behavior.
