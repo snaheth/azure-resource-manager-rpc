@@ -128,51 +128,38 @@ For resources that implement data encryption and allow the customer to specify t
 
 ```
 {
+    "swagger": "2.0",
     "encryption": {
         "type": "object",
-        "metadata": {
-            "description": "All encryption configuration for a resource."
-        },
-        "subProperties": {
+        "description": "All encryption configuration for a resource.",
+        "properties": {
             "infrastructureEncryption": {
-                "type": string numb,
-                "metadata": {
-"description": "(Optional) Discouraged to include in resource definition. Only needed where it is possible to disable platform (AKA infrastructure) encryption. Azure SQL TDE is an example of this. Values are enabled and disabled.”
-                }
+                "type": string enum,
+                "description": "(Optional) Discouraged to include in resource definition. Only needed where it is possible to disable platform (AKA infrastructure) encryption. Azure SQL TDE is an example of this. Values are enabled and disabled.”
             }
             "customerManagedKeyEncryption": {
                 "type": "object",
-                "metadata": {
-"description":"All Customer-managed key encryption properties for the resource."
-                },
-                "subProperties": {
+                "description":"All Customer-managed key encryption properties for the resource.",
+                "properties": {
                     "keyEncryptionKeyIdentity": {
                         "type": "object",
-                        "metadata": {
-"description":"All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault."
-                        },
-                        "subProperties": {
+                        "description":"All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault.",
+                        "properties": {
                             "identityType": {
-                                "type": string num,
-                                "metadata": {
-"description": "Values can be systemAssignedIdentity or userAssignedIdentity”
-                                }
+                                "type": string enum,
+                                "description": "Values can be systemAssignedIdentity or userAssignedIdentity”
                             },
                             "userAssignedIdentityResourceId": {
                                 "type": "string",
                                 "defaultValue": "",
-                                "metadata": {
-"description": "user assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/<resource group>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity.”
-                                }
+                                "description": "user assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/<resource group>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity.”
                             }
                         }
                     },
                     "keyEncryptionKeyUrl": {
                         "type": "string",
                         "defaultValue": "",
-                        "metadata": {
-"description": "key encryption key Url, versioned or unversioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek"
-                        }
+                        "description": "key encryption key Url, versioned or unversioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek."
                     }
                 }
             }
