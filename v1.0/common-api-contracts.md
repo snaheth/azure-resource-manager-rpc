@@ -185,7 +185,36 @@ Error cases:
 ### State Change Table ###
 The following sample ARM requests depict the expected state changes and service behavior.
 
-#### Partial Patch – Service-Assigned to User-Assigned Managed Identity ####
+#### Full Object with System-Assigned Identity ####
+```
+{
+    "encryption": {
+        "customerManagedKeyEncryption": {
+            "keyEncryptionKeyIdentity": {
+                "identityType": "systemAssignedIdentity"
+            },
+            "keyEncryptionKeyUrl": "https://contosovault.vault.azure.net/keys/contosokek"
+        }
+    }
+} 
+```
+
+#### Full Object with User-Assigned Identity ####
+```
+{
+    "encryption": {
+        "customerManagedKeyEncryption": {
+            "keyEncryptionKeyIdentity": {
+                "identityType": "userAssignedIdentity",
+                "userAssignedIdentity": "UA resource id"
+            },
+            "keyEncryptionKeyUrl": "https://contosovault.vault.azure.net/keys/contosokek"
+        }
+    }
+} 
+```
+
+#### Partial Patch – System-Assigned to User-Assigned Managed Identity ####
 ```
 {
     "encryption": {
@@ -199,7 +228,7 @@ The following sample ARM requests depict the expected state changes and service 
 } 
 ```
 
-#### Partial Patch – User-Assigned to Service-Assigned Managed Identity ####
+#### Partial Patch – User-Assigned to System-Assigned Managed Identity ####
 ```
 {
     "encryption": {
