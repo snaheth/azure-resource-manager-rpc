@@ -128,41 +128,125 @@ For resources that implement data encryption and allow the customer to specify t
 
 ```
 {
-  "id": "/subscriptions/{id}/resourceGroups/{group}/providers/{rpns}/{type}/{name}",
-  "name": "{name}",
-  "type": "{resourceProviderNamespace}/{resourceType}",
-  "location": "North US",
-   "systemData":{
-      "createdBy": "<string>",
-      "createdByType": "<User|Application|ManagedIdentity|Key>",
-      "createdAt": "<date-time>",
-      "lastModifiedBy": "<string>",
-      "lastModifiedByType": "<User|Application|ManagedIdentity|Key>",
-      "lastModifiedAt": "<date-time>"
-  },
-  "tags": {
-    "key1": "value 1",
-    "key2": "value 2"
-  },
-  "kind": "resource kind",
-  "properties": {
-   "encryption": {
-      "status": "enabled",
-      "keyVaultProperties": {
-        "keyIdentifier": "string",
-        "identityClientId": "string"
-      }
-    },
-    "comment": "Resource defined structure"
-  }
+    "swagger": "2.0",
+    "encryption": {
+        "type": "object",
+        "description": "All encryption configuration for a resource.",
+        "properties": {
+            "infrastructureEncryption": {
+                "type": string,
+                "enum": [
+                  "enabled",
+                  "disabled"
+                ],
+                "description": "(Optional) Discouraged to include in resource definition. Only needed where it is possible to disable platform (AKA infrastructure) encryption. Azure SQL TDE is an example of this. Values are enabled and disabled.”
+            }
+            "customerManagedKeyEncryption": {
+                "type": "object",
+                "description":"All Customer-managed key encryption properties for the resource.",
+                "properties": {
+                    "keyEncryptionKeyIdentity": {
+                        "type": "object",
+                        "description":"All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault.",
+                        "properties": {
+                            "identityType": {
+                                "type": string,
+                                "enum": [
+                                  "systemAssignedIdentity",
+                                  "userAssignedIdentity"
+                                ],
+                                "description": "Values can be systemAssignedIdentity or userAssignedIdentity”
+                            },
+                            "userAssignedIdentityResourceId": {
+                                "type": "string",
+                                "defaultValue": "",
+                                "description": "user assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/<resource group>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity.”
+                            }
+                        }
+                    },
+                    "keyEncryptionKeyUrl": {
+                        "type": "string",
+                        "defaultValue": "",
+                        "description": "key encryption key Url, versioned or unversioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek."
+                    }
+                }
+            }
+        }
+    }
 }
 ```
 
 ### Properties ###
 | Name  | Description |
 | ------------- | ------------- |
-| status  | Enable or disable encryption. Do not include if encryption is mandatory. |
-| keyVaultProperties.keyIdentifier  | Key vault uri to access the encryption key  |
-| keyVaultProperties.identityClientId | The client id of the identity which will be used to access key vault  |
+| infrastructureEncryption  | String enum with values of "enabled" and "disabled". It is preferred to make infrastructure or platform encryption mandatory, but if included this enables or disables infrastructure or platform encryption. |
+| customerManagedKeyEncryption.keyEncryptionKeyUrl  | Key vault uri to access the encryption key  |
+| customerManagedKeyEncryption.keyEncryptionKeyIdentity.identityType | String enum. Values are "userAssignedIdentity" or "systemAssignedIdentity"  |
+| customerManagedKeyEncryption.keyEncryptionKeyIdentity.userAssignedIdentity | The the User Assigned resource id of the identity which will be used to access key vault  |
 
 On PUT/PATCH of a new key, the provider is expected to implement key rotation for the encrypted data. 
+
+Error cases:
+-	identityType == "systemAssignedIdentity" and userAssignedIdentity != NULL
+-	infrastructureEncryption == enabled but keyEncryptionKeyUrl is set. Infrastructure encryption is needed to support CMK.
+
+### State Change Table ###
+The following sample ARM requests depict the expected state changes and service behavior.
+
+#### Full Object with System-Assigned Identity ####
+```
+{
+    "encryption": {
+        "customerManagedKeyEncryption": {
+            "keyEncryptionKeyIdentity": {
+                "identityType": "systemAssignedIdentity"
+            },
+            "keyEncryptionKeyUrl": "https://contosovault.vault.azure.net/keys/contosokek"
+        }
+    }
+} 
+```
+
+#### Full Object with User-Assigned Identity ####
+```
+{
+    "encryption": {
+        "customerManagedKeyEncryption": {
+            "keyEncryptionKeyIdentity": {
+                "identityType": "userAssignedIdentity",
+                "userAssignedIdentity": "UA resource id"
+            },
+            "keyEncryptionKeyUrl": "https://contosovault.vault.azure.net/keys/contosokek"
+        }
+    }
+} 
+```
+
+#### Partial Patch – System-Assigned to User-Assigned Managed Identity ####
+```
+{
+    "encryption": {
+        "customerManagedKeyEncryption": {
+            "keyEncryptionKeyIdentity": {
+                "identityType": "userAssignedIdentity",
+                "userAssignedIdentity": "UA resource id"
+            }
+        }
+    }
+} 
+```
+
+#### Partial Patch – User-Assigned to System-Assigned Managed Identity ####
+```
+{
+    "encryption": {
+        "customerManagedKeyEncryption": {
+            "keyEncryptionKeyIdentity": {
+                "identityType": "systemAssignedIdentity",
+                "userAssignedIdentity": null
+            }
+        }
+    }
+}
+```
+
