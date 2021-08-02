@@ -134,7 +134,11 @@ For resources that implement data encryption and allow the customer to specify t
         "description": "All encryption configuration for a resource.",
         "properties": {
             "infrastructureEncryption": {
-                "type": string enum,
+                "type": string,
+                "enum": [
+                  "enabled",
+                  "disabled"
+                ],
                 "description": "(Optional) Discouraged to include in resource definition. Only needed where it is possible to disable platform (AKA infrastructure) encryption. Azure SQL TDE is an example of this. Values are enabled and disabled.”
             }
             "customerManagedKeyEncryption": {
@@ -146,7 +150,11 @@ For resources that implement data encryption and allow the customer to specify t
                         "description":"All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault.",
                         "properties": {
                             "identityType": {
-                                "type": string enum,
+                                "type": string,
+                                "enum": [
+                                  "systemAssignedIdentity",
+                                  "userAssignedIdentity"
+                                ],
                                 "description": "Values can be systemAssignedIdentity or userAssignedIdentity”
                             },
                             "userAssignedIdentityResourceId": {
@@ -171,9 +179,9 @@ For resources that implement data encryption and allow the customer to specify t
 ### Properties ###
 | Name  | Description |
 | ------------- | ------------- |
-| infrastructureEncryption  | String enum with values of enabled and disabled. It is preferred to make infrastructure or platform encryption mandatory, but if included this enables or disables infrastructure or platform encryption. |
+| infrastructureEncryption  | String enum with values of "enabled" and "disabled". It is preferred to make infrastructure or platform encryption mandatory, but if included this enables or disables infrastructure or platform encryption. |
 | customerManagedKeyEncryption.keyEncryptionKeyUrl  | Key vault uri to access the encryption key  |
-| customerManagedKeyEncryption.keyEncryptionKeyIdentity.identityType | String enum. Values are userAssignedIdentity or systemAssignedIdentity  |
+| customerManagedKeyEncryption.keyEncryptionKeyIdentity.identityType | String enum. Values are "userAssignedIdentity" or "systemAssignedIdentity"  |
 | customerManagedKeyEncryption.keyEncryptionKeyIdentity.userAssignedIdentity | The the User Assigned resource id of the identity which will be used to access key vault  |
 
 On PUT/PATCH of a new key, the provider is expected to implement key rotation for the encrypted data. 
