@@ -29,10 +29,11 @@ The API flow for PUT should be to:
 
 1. Respond to the initial PUT request with a 201 Created or 200 OK (per normal guidance).
 2. Since provisioning is not complete, the PUT response body **MUST** contain a provisioningState property set to a non-terminal value (as described [below](#provisioningstate-property)). Resource properties should reflect the update that is in progress (i.e. the state the resource will be in once the async operation is complete).
-4. When provisioningState is non-terminal value, the response headers **MUST** include a Location header that points to a URL where the ongoing operation can be monitored (as described [below](#202-accepted-and-location-headers)) or/and a Azure-AsyncOperation header pointing to an Operation resource (as described [below](#azure-asyncoperation-resource-format)).
-5. Future GETs on the resource that was created should continue to return a 200 Status Code and provisioningState property that is \*non-terminal\* as long as the provisioning is in progress. 
-6. After the provisioning completes, the provisioningState property should transition to one of the terminal states. If an update to existing resource properties failed then those properties should be reverted to their previous state if that best represents the end state of the resource after the failed operation.
-7. The provisioningState property should be returned on all future GETs, even after it is complete, until some other operation (e.g. a DELETE or UPDATE) causes it to transition to a non-terminal state.
+4. When provisioningState is non-terminal value, the response headers **MUST** include a Location header that points to a URL where the ongoing operation can be monitored (as described [below](#202-accepted-and-location-headers)). 
+5. (Optional) An Azure-AsyncOperation header pointing to an Operation resource (as described [below](#azure-asyncoperation-resource-format)).
+6. Future GETs on the resource that was created should continue to return a 200 Status Code and provisioningState property that is \*non-terminal\* as long as the provisioning is in progress. 
+7. After the provisioning completes, the provisioningState property should transition to one of the terminal states. If an update to existing resource properties failed then those properties should be reverted to their previous state if that best represents the end state of the resource after the failed operation.
+8. The provisioningState property should be returned on all future GETs, even after it is complete, until some other operation (e.g. a DELETE or UPDATE) causes it to transition to a non-terminal state.
 
 <br/>
 
