@@ -287,10 +287,10 @@ Singleton resources must still expose a collection GET and individual GET on the
 **Response**: 
 ```
 {
-      "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/default",
-      "type": "Microsoft.Sql/servers/databases/securityAlertPolicies",
-      "name": "default",
-      "properties": {
-      }
-    }
+  "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/default",
+  "type": "Microsoft.Sql/servers/databases/securityAlertPolicies",
+  "name": "default",
+  "properties": {
+  }
+}
 ```
