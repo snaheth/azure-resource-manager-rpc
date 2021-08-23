@@ -5,6 +5,7 @@ This document describes preferred schemas for resource APIs that are to remain c
 - [System Metadata for all Azure resources](#system-metadata-for-all-azure-resources) </br>
 - [Describing Location for off-Azure resources](#describing-location-for-off-azure-resources)
 - [Customer-managed Key encryption](#customer-managed-key-encryption)
+- [Singleton Resources](#singleton-resources)
 
 ## System Metadata for all Azure resources ##
 As of 2020, all Azure resources should implement a read-only `systemData` object property in the top-level envelope. 
@@ -250,3 +251,46 @@ The following sample ARM requests depict the expected state changes and service 
 }
 ```
 
+## Singleton Resources ##
+
+There are instances where a resource provider needs to enforce that only a single instance of a proxy resource exists. Many times these resources are configuration related (i.e. [`Microsoft.Sql/servers/databases/securityAlertPolicies`](https://docs.microsoft.com/rest/api/sql/2021-02-01-preview/database-security-alert-policies/create-or-update). Singleton resources should adhere to the following conventions.
+
+### Naming ###
+
+Singleton resources typically have a pre-defined name of `default` or `current`.
+
+### GET APIs ###
+
+Singleton resources must still expose a collection GET and individual GET on the resource type. The collection GET will only return one instance of the resource with the pre-defined resource name.
+
+#### Collection GET Example ####
+**URI**: `GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies`
+
+**Response**: 
+```
+{
+  "value": [
+    {
+      "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/default",
+      "type": "Microsoft.Sql/servers/databases/securityAlertPolicies",
+      "name": "default",
+      "properties": {
+      }
+    }
+  ]
+}
+```
+
+#### Individual GET Example ####
+**URI**: `GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/default`
+
+**Response**: 
+```
+{
+      "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/default",
+      "type": "Microsoft.Sql/servers/databases/securityAlertPolicies",
+      "name": "default",
+      "properties": {
+      }
+    }
+```
