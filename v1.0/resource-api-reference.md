@@ -196,7 +196,7 @@ The response includes an HTTP status code, a set of response headers, and a resp
 
 **Status Code**
 
-The resource provider should return 200 (OK) to indicate that the operation completed successfully. 202 (Accepted) can be returned to indicate that the operation will complete [asynchronously](api-async-reference.md#asynchronous-operations).
+The resource provider should return 200 (OK) to indicate that the operation completed successfully. 202 (Accepted) can be returned to indicate that the operation will complete [asynchronously](async-api-reference.md#asynchronous-operations).
 
 If the resource group \*or\* resource does not exist, 404 (NotFound) should be returned.
 
