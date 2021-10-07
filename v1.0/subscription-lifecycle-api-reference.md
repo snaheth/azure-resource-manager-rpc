@@ -135,7 +135,7 @@ If a 200, the response body will contain the original request that was PUT per t
 
 **Allowed Actions when 'Warned' or 'Disabled'**
 
-Through correct configuration of [subscriptionStateRules](https://armwiki.azurewebsites.net/rp_onboarding/ResourceProviderRegistration.html#subscriptionstaterules-optional) and [reRegisterSubscriptionMetadata](https://armwiki.azurewebsites.net/rp_onboarding/ResourceProviderRegistration.html#reregistersubscriptionmetadata-optional) inside a given RP manifest, ARM will handle filtering actions that are not allowed for a given state (returning a 409 when not allowed). This filtering does not need to be managed directly by the RP.
+When configured correctly inside a given RP manifest, ARM will handle filtering actions (example: not allowing PUT/POST/PATCH) and returning a 409 when a given action is not allowed for a current state. This filtering does not need to be managed directly by the RP.
 
 | SubscriptionState | Description |
 |-------------| ----------------|
