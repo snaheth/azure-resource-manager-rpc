@@ -117,7 +117,7 @@ The response includes an HTTP status code, a set of response headers, and a resp
 
 **Status Code**
 
-The resource provider should return 200 (OK) to indicate that the operation completed successfully. 202 (Accepted) can be returned to indicate that the operation will [complete asynchronously](async-api-reference.md#asynchronous-operations).
+The resource provider should return 200 (OK) to indicate that the operation completed successfully. 202 (Accepted) can be returned to indicate that the operation will [complete asynchronously](async-api-reference.md#asynchronous-operations). Any status other than 200 (OK), 201 (Created), or 204 (No Content) will cause ARM to retry subject to their retry/backoff handling.
 
 The location header is not followed as part of the notification; instead, the notification will be retried with a delay. It is expected that subsequent updates that are a no-op will complete synchronously.
 
@@ -133,11 +133,15 @@ If a 200, the response body will contain the original request that was PUT per t
 
 ### Subscription States
 
+**Allowed Actions when 'Warned' or 'Disabled'**
+
+When configured correctly inside a given RP manifest, ARM will handle filtering actions (example: not allowing PUT/POST/PATCH) and returning a 409 when a given action is not allowed for a current state. This filtering does not need to be managed directly by the RP.
+
 | SubscriptionState | Description |
 |-------------| ----------------|
 | **Registered** | The subscription was entitled to use your &quot;ResourceProviderNamespace&quot;.   Azure will use this subscription in future communications. You may also do any initial state setup as a result of this notification type.  When a subscription is &quot;fixed&quot; / restored from being suspended, it will return to the &quot;Registered&quot; state.  All management APIs must function (PUT/PATCH/DELETE/POST/GET), all resources must run normally; Bill normally.|
 | **Warned** | The subscription has been warned (generally due to forthcoming suspension resulting from fraud or non-payment). Resources must be offline but in running (or quickly recoverable state).  Do **not** deallocate resources.   GET/DELETE management APIs must function; PUT/PATCH/POST must not.  **Don't emit any usage. Any emitted usage will be ignored.**|
 | **Suspended** | The subscription has been suspended (generally due to fraud or non-payment) and the Resource Provider should stop the subscription from generating any additional usage. Pay-for-use resource should have access rights revoked when the subscription is disabled.   In such cases the Resource Provider should also mark the Resource State as &quot;Suspended.&quot;  We recommend that you treat this as a soft-delete: GET/DELETE management APIs must continue to function, yet PUT/PATCH/POST must not. **Don't emit any usage. Any emitted usage will be ignored.**|
-| **Deleted** | The customer has cancelled their Windows Azure subscription and its content \*must\* be cleaned up by the resource provider.The resource provider does \*not\* receive a DELETE call for each resource – this is expected to be a &quot;cascade&quot; deletion.|
-| **Unregistered** | Either the customer has not yet chosen to use the resource provider, or the customer has decided to stop using the Resource Provider. Only GETs are permitted. In the case of formerly registered subscriptions, all existing resources would already have been deleted by the customer explicitly.|
+| **Deleted** | The customer has cancelled their Windows Azure subscription and its content \*must\* be cleaned up by the resource provider.The resource provider does \*not\* receive a DELETE call for each resource – this is expected to be handled internally by the RP as a &quot;cascade&quot; deletion. Because this subscription lifecycle handling bypasses ARM's linked notification handling, a given RP will also be responsible for this internal deletion of any associated extension resources.|
+| **Unregistered** | Either the customer has not yet chosen to use the resource provider, or the customer has decided to stop using the Resource Provider. Only GETs are permitted. In the case of formerly registered subscriptions, all existing tracked resources would already have been deleted by the customer explicitly. RP extension resources would require an internal &quot;cascade&quot; delete cleanup similar to the **Deleted** case above.|
 
