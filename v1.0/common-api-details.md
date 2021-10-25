@@ -22,6 +22,7 @@ The resource provider proxy will preserve all the client requests headers, with 
 | x-ms-client-principal-name | Always added. Set to the principal name / UPN of the client JWT making the request. | 1st party only |
 | x-ms-client-principal-id | Added when available. Set to the principal Id of the client JWT making the request. Service principal will not have the principal Id. | 1st party only |
 | x-ms-client-tenant-id | Always added. Set to the tenant ID of the client JWT making the request. | 1st party only |
+| x-ms-home-tenant-id | Added for requests at or below subscription scopes. Set to the tenant ID of the subscription. This will be different from `x-ms-client-tenant-id` in cross-tenant scenarios. | 1st party only |
 | x-ms-client-audience | Always added. Set to the audience of the client JWT making the request. | 1st party only |
 | x-ms-client-issuer | Always added. Set to the issuer of the client JWT making the request. | 1st party only |
 | x-ms-client-object-id | Always added. Set to the object Id of the client JWT making the request. Not all users have object Id. For CSP (reseller) scenarios for example, object Id is not available. | 1st party only |
