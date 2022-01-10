@@ -313,11 +313,15 @@ The response includes an HTTP status code, a set of response headers, and a resp
 
 The resource provider should return 200 (OK) to indicate that the operation completed successfully.
 
-If the resource does not exist, 404 (NotFound) should be returned. For other errors (e.g. internal errors) use the appropriate HTTP error code.
+If the resource does not exist, 404 (NotFound) should be returned. 
 
 If the resource group does not exist, 404 (NotFound) will be returned by the proxy \*without\* reaching the resource provider.
 
-If the subscription does not exist, 404 (NotFound) will be returned by the proxy \*without\* reaching the resource provider. If the subscription is not registered with the resource provider, it should return a 404 (NotFound) or an empty collection. When there are no types and all parent entities exist, it should return an empty collection. It must not return a 5xx status code or 403.
+If the subscription does not exist, 404 (NotFound) will be returned by the proxy \*without\* reaching the resource provider. If the subscription is not registered with the resource provider, it should return a 404 (NotFound) or an empty collection. 
+
+If there are no types and all parent entities (resource group and subscription) exist, it should return an empty collection. It must not return a 5xx status code or 403 for this specific condition.
+
+For other errors use the appropriate HTTP error code (e.g. 500 for Internal server error). 
 
 **Response Headers**
 
