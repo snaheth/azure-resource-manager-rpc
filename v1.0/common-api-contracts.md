@@ -8,7 +8,7 @@ This document describes preferred schemas for resource APIs that are to remain c
 - [Singleton Resources](#singleton-resources)
 
 ## System Metadata for all Azure resources ##
-As of 2020, all Azure resources should implement a read-only `systemData` object property in the top-level envelope. 
+As of 2020, all Azure resources may implement a read-only `systemData` object property in the top-level envelope. 
 
 ```
 {
