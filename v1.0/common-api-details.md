@@ -135,6 +135,12 @@ The resource providers must return the \*code\* and \*message\* fields; and shou
 | additionalInfo | array (optional) | An array of objects with "type" (string), and "info" (object) properties. The schema of "info" is service-specific and dependent on the "type" string. |
 
 
+### Max Request Body Size ###
+
+The maximum size of a request body that ARM will accept is 4 MB.
+
+Any request with a body larger than 4 MB will not be sent to the resource provider, and a **413 Payload Too Large** will be returned to the client.
+
 ### Max Response Size ###
 
 In all the calls that ARM makes to the resource provider, the maximum size of a response that ARM will accept from the resource providers is 8 MB.
